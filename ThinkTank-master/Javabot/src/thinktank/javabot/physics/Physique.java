@@ -161,13 +161,20 @@ public class Physique {
 	 	*/
 		
 		int i = 0;
-		
-		for(Tank t : getTanks()){
-
-			System.out.println("TANK!");
-			t.lancerIA();
-			t.reduireTempsRestant();
-		}
+	/*	if (map.getProjectile() == null)
+		{
+			int k = getTanks().size();
+			
+				for (int l = 0; l < k; l++ )
+				{
+					Tank t = getTanks().get(l);
+				System.out.println("TANK!");
+				
+			
+					t.lancerIA();
+					t.reduireTempsRestant();
+				}
+		}*/
 		/*
 		
 		for (Projectile p: map.getProjectiles())
@@ -190,11 +197,9 @@ public class Physique {
 						if(i < ps.size())
 							p = ps.get(i);
 					}
-<<<<<<< HEAD
 					else // si il est mort
-=======
-					else
->>>>>>> e34244bdde4e06ada7c785e75e0493313f407c5e
+
+
 						if(Projectile.getIdMort() == -1)
 							p=ps.get(i);
 						else{
@@ -217,11 +222,7 @@ public class Physique {
 
 		//Tank.getIntels().waitForAllActions();
 		
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
 		
 
 		/*
@@ -255,6 +256,15 @@ public class Physique {
 		if (map.getProjectile() != null)
 		{
 			mobId = map.getProjectile().avancer();
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
 			/* Si un tank est détruit et qu'il était placé avant ou à à l'emplacement du tour courant dans la liste, on ne modifie pas le tour courant
 			 * La suppression d'un élément d'un arraylist décale automatiquement tous les autres éléments vers la gauche.
 			 * tour = tour - 1;
@@ -276,17 +286,23 @@ public class Physique {
 			if (getTanks().size() != 0)
 			{
 				tour = (tour + 1) % getTanks().size();
+				System.out.println("Tour numero "+tour);
 					
 					t = getTanks().get(tour);
+					t.lancerIA();
+					t.reduireTempsRestant();
+					
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					
 					t.getAction();
 				
 					System.out.println("ttank");
-			  /*try {
-			 
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
+			
 			}
 		
 		
