@@ -19,7 +19,7 @@ public class Physique {
 	}
 	
 
-	private int tour = -1;
+	private int tour = 0;
 
 	
 	public boolean isAffichageOn() {
@@ -155,6 +155,7 @@ public class Physique {
 		map.newMur(x, y);
 	}
 	
+	
 	public void iter(){
 		/**
 	 	* lance la prochaine action de tout les éléments du Terrain
@@ -285,15 +286,23 @@ public class Physique {
 		{
 			if (getTanks().size() != 0)
 			{
+				t = getTanks().get(tour);
+				if (t.getAvancement() != 0)
+				{
+					t.decAvancement(Mobile.vitesseAvancement);
+					System.out.println("Avancement: "+t.getAvancement());
+					return;
+				}
+				t.initAvancement();
 				tour = (tour + 1) % getTanks().size();
 				System.out.println("Tour numero "+tour);
 					
 					t = getTanks().get(tour);
 					t.lancerIA();
 					t.reduireTempsRestant();
-					
+				
 					try {
-						Thread.sleep(100);
+						Thread.sleep(5);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

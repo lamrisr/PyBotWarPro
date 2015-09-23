@@ -3,6 +3,7 @@ package thinktank.javabot.physics;
 
 public abstract class Mobile implements ObjetTT{
 	private static int idMob = 0;
+	public static int vitesseAvancement = 1;
 	private int id;
 	private int coordX;
 	private int coordY;
@@ -10,10 +11,18 @@ public abstract class Mobile implements ObjetTT{
 	private Direction direction;
 	private int latence = 0;
 	private boolean mort = false;
+	private int avancement = 100;
+	
+	
+	public int getAvancement()
+	{
+		return avancement;
+	}
 	
 	public boolean getMort(){
 		return mort;
 	}
+	
 	
 	protected void meurt() {
 		mort = true;
@@ -21,6 +30,16 @@ public abstract class Mobile implements ObjetTT{
 
 	public int getLatence() {
 		return latence;
+	}
+	
+	protected void decAvancement(int valDec)
+	{
+		avancement -= valDec;
+	}
+	
+	protected void initAvancement()
+	{
+		avancement = 100;
 	}
 	
 	protected void setLatence(int latence) {

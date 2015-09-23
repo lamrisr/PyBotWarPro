@@ -156,7 +156,13 @@ public class MainWindow extends JFrame {
 		while(true){
 			
 			window.phy.iter();
+			System.out.println("Repaint !");
 			window.game.repaint();
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			
 		}
 		

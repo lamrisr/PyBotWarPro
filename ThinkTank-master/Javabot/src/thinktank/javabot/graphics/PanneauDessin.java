@@ -34,6 +34,7 @@ public class PanneauDessin extends JPanel {
 	 **/
 	public void paintComponent(Graphics g) 
     {     
+		System.out.println("PaintComponent");
 		g.setColor(Color.black);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		int lx = 42;
@@ -42,8 +43,8 @@ public class PanneauDessin extends JPanel {
 		for(int i = 0; i < lx; i++){
 			for(int j = 0; j< ly; j++){
 				
-				int x = i*tailleCase;
-				int y = j*tailleCase;
+				int x = i * tailleCase;
+				int y = j * tailleCase;
 				
 				contenu = physique.detail(i, j);
 				
@@ -78,8 +79,40 @@ public class PanneauDessin extends JPanel {
 					
 					
 					int vie = Integer.valueOf(((Tank)contenu).getPointsDeVie());
+					int posx;
+					int posy;
+					switch (ni)
+					{
+						case 0: //HAUT
+							 posx = x ;
+							 posy = (int) (y + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
+							System.out.println("x: "+posx+" y: "+posy );
+							break;
+							
+						case 1: //BAS
+							posx = x ;
+							posy = (int) (y - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
+							System.out.println("x: "+posx+" y: "+posy );
+							break;
+							
+						case 2: //GAUCHE
+							posx = (int) (x + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+							posy = y;
+							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
+							System.out.println("x: "+posx+" y: "+posy );
+							break;
+							
+						default: //DROITE
+							
+							posx = (int) (x - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+							posy = y;
+							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
+							System.out.println("x: "+posx+" y: "+posy );
+							break;
+					}
 					
-					g.drawImage(sp.getImg(ni),x,y,tailleCase,tailleCase,null);
 					g.setColor(Color.CYAN);
 					g.fillRect(x, y-10, 24*vie/100, 5);
 					g.setColor(Color.WHITE);
