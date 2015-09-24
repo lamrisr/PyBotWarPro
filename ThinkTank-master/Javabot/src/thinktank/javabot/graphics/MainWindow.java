@@ -48,13 +48,13 @@ public class MainWindow extends JFrame {
 	 **/
 	public MainWindow() {
 		
-		int lx = 42;
-		int ly = 24;
+		int lx = 30;
+		int ly = 22;
 		phy = new Physique(lx, ly);
 		game = new PanneauDessin(phy);
 		
 		this.setTitle("JavaBot");
-		this.setSize(1008, 634);
+		this.setSize(740, 560);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -85,13 +85,20 @@ public class MainWindow extends JFrame {
 		
 		container.add(game);
 		container.add(c2);
-
+		
 		
 		this.setContentPane(container);
 		this.setResizable(true);
 		this.setVisible(true); 
 		
 		game.repaint();
+		GraphicInterface NewGame=new GraphicInterface();
+		
+		
+		NewGame.jPanel5.add(container);
+		//NewGame.jPanel5.add(c2);
+		NewGame.setVisible(true);
+		this.setVisible(false); 
 	
 	}
 	
@@ -119,7 +126,7 @@ public class MainWindow extends JFrame {
 		}
 		for(int i = 28; i < 33; i++)
 		{
-			window.phy.newMur(i,20);
+			//window.phy.newMur(i,20);
 	
 		}
 		for(int i = 10; i < 15 ; i++)
@@ -154,8 +161,9 @@ public class MainWindow extends JFrame {
 		});
 		
 		while(true){
-			
-			window.phy.iter();
+			if(!GraphicInterface.stoped){
+				window.phy.iter();
+			}
 			window.game.repaint();
 			
 		}
