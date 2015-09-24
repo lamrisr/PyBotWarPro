@@ -2,10 +2,14 @@ package thinktank.javabot.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import thinktank.javabot.intelligences.Action;
 import thinktank.javabot.physics.ObjetTT;
 import thinktank.javabot.physics.Physique;
 import thinktank.javabot.physics.Tank;
@@ -21,12 +25,44 @@ public class PanneauDessin extends JPanel {
 	Sprite mur = new Sprite("ressources/mur.png");
 	Sprite sol = new Sprite("ressources/sol.png");
 	Sprite projectile = new Sprite("ressources/shot.png");
+	AffineTransformOp op;
 	
 	public PanneauDessin(Physique physique){
 		super();
 		this.physique =  physique;
 	}
 	
+	private void paintLifeStick(Graphics g, int x, int y, int vie)
+	{
+		g.setColor(Color.CYAN);
+		g.fillRect(x, y - 10, 24*vie/100, 5);
+		g.setColor(Color.WHITE);
+		g.drawRect(x, y - 10, 24, 5);
+	}
+	
+	private AffineTransformOp computeRotation(Image image, Action action, int avancement)
+	{
+		double rotationRequired;
+		if (action == Action.turnClockwise)
+		{
+			rotationRequired = Math.toRadians (-90 + ((100 - avancement) / 100.0) * 90);
+			System.out.println("r: " + (-90 + ((100 - avancement) / 100.0) * 90));
+		}
+		else if (action == Action.turnCounterClockwise)
+		{
+			rotationRequired = Math.toRadians (-90 + (avancement - 10));
+		}
+		else
+		{
+			rotationRequired = Math.toRadians (0);
+		}
+		 
+		double locationX = image.getWidth(null) / 2;
+		double locationY = image.getHeight(null) / 2;
+		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		return op;
+	}
 	
 	/**
 	 * Fonctions de dessins pour les divers éléments du jeu
@@ -34,7 +70,6 @@ public class PanneauDessin extends JPanel {
 	 **/
 	public void paintComponent(Graphics g) 
     {     
-		System.out.println("PaintComponent");
 		g.setColor(Color.black);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		int lx = 42;
@@ -79,49 +114,51 @@ public class PanneauDessin extends JPanel {
 					
 					
 					int vie = Integer.valueOf(((Tank)contenu).getPointsDeVie());
-					int posx;
-					int posy;
-					switch (ni)
+					int posx = x;
+					int posy = y;
+					if (((Tank)contenu).getDeplacementStatus() == Action.moveForward || 
+							((Tank)contenu).getDeplacementStatus() == Action.moveBackward)
 					{
-						case 0: //HAUT
-							 posx = x ;
-							 posy = (int) (y + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
-							System.out.println("x: "+posx+" y: "+posy );
+						switch (ni)
+						{
+							case 0: //HAUT
+								posx = x ;
+								posy = (int) (y + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+							
+							
 							break;
 							
-						case 1: //BAS
-							posx = x ;
-							posy = (int) (y - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
-							System.out.println("x: "+posx+" y: "+posy );
+							case 1: //BAS
+								posx = x ;
+								posy = (int) (y - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+							
 							break;
 							
-						case 2: //GAUCHE
-							posx = (int) (x + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-							posy = y;
-							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
-							System.out.println("x: "+posx+" y: "+posy );
+							case 2: //GAUCHE
+								posx = (int) (x + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+								posy = y;
+		
 							break;
 							
-						default: //DROITE
+							default: //DROITE
 							
-							posx = (int) (x - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-							posy = y;
-							g.drawImage(sp.getImg(ni), posx, posy, tailleCase, tailleCase, null);
-							System.out.println("x: "+posx+" y: "+posy );
+								posx = (int) (x - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+								posy = y;
+							
 							break;
 					}
-					
-					g.setColor(Color.CYAN);
-					g.fillRect(x, y-10, 24*vie/100, 5);
-					g.setColor(Color.WHITE);
-					g.drawRect(x, y-10, 24, 5);
-	
+							}
+					 op = computeRotation(
+							sp.getImg(ni), 
+							(((Tank)contenu).getDeplacementStatus()), 
+							(((Tank)contenu).getAvancement())
+									);
+					g.drawImage(op.filter(sp.getImg(ni), null), posx, posy, /*tailleCase, tailleCase,*/ null);
+					paintLifeStick(g, posx, posy, vie);
 					
 				}
 				else if(contenu.getType() == Physique.type.projectile){
-					g.drawImage(projectile.getImg(),x,y,tailleCase,tailleCase,null);
+					g.drawImage(projectile.getImg() ,x,y,tailleCase,tailleCase,null);
 				}		
 			}
 		}

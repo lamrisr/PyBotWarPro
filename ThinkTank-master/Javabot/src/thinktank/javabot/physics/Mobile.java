@@ -1,5 +1,7 @@
 package thinktank.javabot.physics;
 
+import thinktank.javabot.intelligences.Action;
+
 
 public abstract class Mobile implements ObjetTT{
 	private static int idMob = 0;
@@ -11,8 +13,20 @@ public abstract class Mobile implements ObjetTT{
 	private Direction direction;
 	private int latence = 0;
 	private boolean mort = false;
-	private int avancement = 100;
+	private int avancement = 0;
+	private Action deplacementStatus; 
+	/* Si il effectue un déplacement lors du tour courant */
 	
+	
+	public Action getDeplacementStatus()
+	{
+		return deplacementStatus;
+	}
+	
+	public void setDeplacementStatus(Action status)
+	{
+		deplacementStatus = status;
+	}
 	
 	public int getAvancement()
 	{
@@ -37,9 +51,14 @@ public abstract class Mobile implements ObjetTT{
 		avancement -= valDec;
 	}
 	
-	protected void initAvancement()
+	protected void incAvancement(int valDec)
 	{
-		avancement = 100;
+		avancement += valDec;
+	}
+	
+	protected void initAvancement(int val)
+	{
+		avancement = val;
 	}
 	
 	protected void setLatence(int latence) {

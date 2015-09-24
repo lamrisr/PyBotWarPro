@@ -150,6 +150,26 @@ public class Physique {
 		map.newMur(x, y);
 	}
 	
+	public boolean iterFluidite(Mobile t)
+	{
+		if (t.getAvancement() != 0)
+		{
+			if (t.getDeplacementStatus() == null)
+				return true;
+			if (t.getDeplacementStatus() ==  Action.moveBackward)
+			{
+				t.incAvancement(Mobile.vitesseAvancement);
+				return true;
+			}
+			else
+			{
+				
+				t.decAvancement(Mobile.vitesseAvancement);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public void iter(){
 		/**
@@ -251,10 +271,13 @@ public class Physique {
 		int mobId;
 		if (map.getProjectile() != null)
 		{
+			if (iterFluidite(map.getProjectile()))
+				return;
+			
 			mobId = map.getProjectile().avancer();
 			
 			try {
-				Thread.sleep(100);
+				Thread.sleep(25);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -265,7 +288,7 @@ public class Physique {
 			 * La suppression d'un élément d'un arraylist décale automatiquement tous les autres éléments vers la gauche.
 			 * tour = tour - 1;
 			 */
-			if (mobId != -1)
+			if (mobId != -1) /* Un tank est détruit par le projectile */
 			{
 				for (int j = 0; j < getTanks().size() && j <= tour; j++ )
 				{
@@ -276,19 +299,19 @@ public class Physique {
 					}
 				}
 			}
+			
 		}
 		else
 		{
 			if (getTanks().size() != 0)
 			{
 				t = getTanks().get(tour);
-				if (t.getAvancement() != 0)
-				{
-					t.decAvancement(Mobile.vitesseAvancement);
-					System.out.println("Avancement: "+t.getAvancement());
+				
+				if (iterFluidite(t))
 					return;
-				}
-				t.initAvancement();
+				
+				t.setDeplacementStatus(null);
+				//t.initAvancement();
 				tour = (tour + 1) % getTanks().size();
 				System.out.println("Tour numero "+tour);
 					
