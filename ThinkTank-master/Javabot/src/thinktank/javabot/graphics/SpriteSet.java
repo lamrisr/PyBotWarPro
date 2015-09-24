@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import jnr.ffi.Struct.sa_family_t;
+
 public class SpriteSet {
 	
 	Image img[] = new Image[4]; 
@@ -21,6 +23,7 @@ public class SpriteSet {
 		    img[3] = ImageIO.read(new File("ressources/TankDCyan.png"));
 
 		} catch (IOException e) {
+			System.out.println(e);
 		}
     
     }

@@ -7,8 +7,6 @@ import thinktank.javabot.intelligences.Action;
 
 import thinktank.javabot.sensors.DetectionLigneDroite;
 
-
-
 public class Physique {
 	
 	public enum type{
@@ -17,9 +15,9 @@ public class Physique {
 		projectile,
 		mur
 	}
-	
 
 	private int tour = 0;
+	private Terrain map;
 
 	
 	public boolean isAffichageOn() {
@@ -33,9 +31,6 @@ public class Physique {
 	public void AffichageOff() {
 		map.AffichageOff();
 	}
-
-	private Terrain map;
-
 	
 	public Physique(int lignes, int colonnes){
 		map = new Terrain(lignes, colonnes);
@@ -161,7 +156,7 @@ public class Physique {
 	 	* lance la prochaine action de tout les éléments du Terrain
 	 	*/
 		
-		int i = 0;
+//		int i = 0;
 	/*	if (map.getProjectile() == null)
 		{
 			int k = getTanks().size();
