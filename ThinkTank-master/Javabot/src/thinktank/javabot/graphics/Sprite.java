@@ -13,6 +13,7 @@ public class Sprite {
 		try {
 		    img = ImageIO.read(new File(filepath));
 		} catch (IOException e) {
+			System.out.println(e);
 		}
 	}
 	

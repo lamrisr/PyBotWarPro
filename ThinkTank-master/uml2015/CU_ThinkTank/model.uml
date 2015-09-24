@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_06n18F0MEeWHuu9-cT2LPQ" name="RootElement"/>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_06n18F0MEeWHuu9-cT2LPQ" name="RootElement">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_7ZaQsGBhEeW2prgY4c7WvA" name="Utilisateur"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_8etE0GBhEeW2prgY4c7WvA" name="ThinkTank">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_9XqGEGBhEeW2prgY4c7WvA" name="Edition">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_XN32IGBiEeW2prgY4c7WvA" name="ExtensionPoint1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_Ar1zoGBiEeW2prgY4c7WvA" name="Debogage">
+      <extend xmi:type="uml:Extend" xmi:id="_W0H5YGBiEeW2prgY4c7WvA" extendedCase="_D8xY4GBiEeW2prgY4c7WvA" extensionLocation="_W0IgcGBiEeW2prgY4c7WvA"/>
+      <extend xmi:type="uml:Extend" xmi:id="_XN3PEGBiEeW2prgY4c7WvA" extendedCase="_9XqGEGBhEeW2prgY4c7WvA" extensionLocation="_XN32IGBiEeW2prgY4c7WvA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_D8xY4GBiEeW2prgY4c7WvA" name="Test">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_W0IgcGBiEeW2prgY4c7WvA" name="ExtensionPoint1"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_TE6csGBiEeW2prgY4c7WvA" client="_7ZaQsGBhEeW2prgY4c7WvA" supplier="_9XqGEGBhEeW2prgY4c7WvA"/>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_VUpDoGBiEeW2prgY4c7WvA" client="_7ZaQsGBhEeW2prgY4c7WvA" supplier="_Ar1zoGBiEeW2prgY4c7WvA"/>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_WNKAAGBiEeW2prgY4c7WvA" client="_7ZaQsGBhEeW2prgY4c7WvA" supplier="_D8xY4GBiEeW2prgY4c7WvA"/>
+</uml:Model>

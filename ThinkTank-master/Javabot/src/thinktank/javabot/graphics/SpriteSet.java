@@ -1,14 +1,17 @@
 package thinktank.javabot.graphics;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import jnr.ffi.Struct.sa_family_t;
+
 public class SpriteSet {
 	
-	Image img[] = new Image[4]; 
+	BufferedImage img[] = new BufferedImage[4]; 
 	
 	
 	public SpriteSet() {
@@ -21,12 +24,13 @@ public class SpriteSet {
 		    img[3] = ImageIO.read(new File("ressources/TankDCyan.png"));
 
 		} catch (IOException e) {
+			System.out.println(e);
 		}
     
     }
 
 
-	public Image getImg(int num) {
+	public BufferedImage getImg(int num) {
 		return img[num];
 	}
 	

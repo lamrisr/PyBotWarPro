@@ -203,12 +203,20 @@ public class Tank extends Mobile {
 
 		switch (act) {
 		case moveForward:
-			avancer();
+			if (avancer() != -2) /*Si le mobile peut avancer */
+			{
+				setDeplacementStatus(Action.moveForward);
+				initAvancement(100);
+			}
 			setLatence(0);
 			break;
 
 		case moveBackward:
-			reculer();
+			if (reculer() != -2) /*Si le mobile peut reculer */
+			{
+				setDeplacementStatus(Action.moveBackward);
+				initAvancement(-100);
+			}
 			setLatence(0);
 			break;
 
@@ -219,11 +227,15 @@ public class Tank extends Mobile {
 
 		case turnClockwise:
 			getDirection().tournerDroite();
+			setDeplacementStatus(Action.turnClockwise);
+			initAvancement(100);
 			setLatence(0);
 			break;
 
 		case turnCounterClockwise:
 			getDirection().tournerGauche();
+			setDeplacementStatus(Action.turnCounterClockwise);
+			initAvancement(100);
 			setLatence(0);
 			break;
 
@@ -279,5 +291,6 @@ public class Tank extends Mobile {
 		}
 		action(act);
 	}
+
 
 }

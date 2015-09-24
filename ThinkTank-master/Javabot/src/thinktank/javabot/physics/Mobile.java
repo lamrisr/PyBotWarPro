@@ -1,8 +1,11 @@
 package thinktank.javabot.physics;
 
+import thinktank.javabot.intelligences.Action;
+
 
 public abstract class Mobile implements ObjetTT{
 	private static int idMob = 0;
+	public static int vitesseAvancement = 1;
 	private int id;
 	private int coordX;
 	private int coordY;
@@ -10,10 +13,30 @@ public abstract class Mobile implements ObjetTT{
 	private Direction direction;
 	private int latence = 0;
 	private boolean mort = false;
+	private int avancement = 0;
+	private Action deplacementStatus; 
+	/* Si il effectue un déplacement lors du tour courant */
+	
+	
+	public Action getDeplacementStatus()
+	{
+		return deplacementStatus;
+	}
+	
+	public void setDeplacementStatus(Action status)
+	{
+		deplacementStatus = status;
+	}
+	
+	public int getAvancement()
+	{
+		return avancement;
+	}
 	
 	public boolean getMort(){
 		return mort;
 	}
+	
 	
 	protected void meurt() {
 		mort = true;
@@ -21,6 +44,21 @@ public abstract class Mobile implements ObjetTT{
 
 	public int getLatence() {
 		return latence;
+	}
+	
+	protected void decAvancement(int valDec)
+	{
+		avancement -= valDec;
+	}
+	
+	protected void incAvancement(int valDec)
+	{
+		avancement += valDec;
+	}
+	
+	protected void initAvancement(int val)
+	{
+		avancement = val;
 	}
 	
 	protected void setLatence(int latence) {
@@ -50,20 +88,21 @@ public abstract class Mobile implements ObjetTT{
 		return val_ret;
 	}
 	
-	protected void reculer()
+	protected int reculer()
 	/**
- 	* permet le mouvement dans le sens de la direction
+ 	* permet le mouvement dans le sens contraire de la direction
  	*/
 	{
 		int old_x = coordX, old_y = coordY;
-		
-		if(map.TestAndSetCase(this,coordX - direction.getDx(),coordY - direction.getDy()) != -2)
+		int val_ret = map.TestAndSetCase(this,coordX - direction.getDx(),coordY - direction.getDy());
+		if( val_ret != -2)
 		{
 			coordX = coordX -direction.getDx();
 			coordY = coordY - direction.getDy();
 			map.erase(old_x,old_y);
 
 		}
+		return val_ret;
 		//System.out.println("type: "+getType()+" id:"+getId()+" newX: "+coordX+" newY: "+coordY);
 
 	}

@@ -7,8 +7,6 @@ import thinktank.javabot.intelligences.Action;
 
 import thinktank.javabot.sensors.DetectionLigneDroite;
 
-
-
 public class Physique {
 	
 	public enum type{
@@ -17,9 +15,9 @@ public class Physique {
 		projectile,
 		mur
 	}
-	
 
-	private int tour = -1;
+	private int tour = 0;
+	private Terrain map;
 
 	
 	public boolean isAffichageOn() {
@@ -33,9 +31,6 @@ public class Physique {
 	public void AffichageOff() {
 		map.AffichageOff();
 	}
-
-	private Terrain map;
-
 	
 	public Physique(int lignes, int colonnes){
 		map = new Terrain(lignes, colonnes);
@@ -155,19 +150,47 @@ public class Physique {
 		map.newMur(x, y);
 	}
 	
+	public boolean iterFluidite(Mobile t)
+	{
+		if (t.getAvancement() != 0)
+		{
+			if (t.getDeplacementStatus() == null)
+				return true;
+			if (t.getDeplacementStatus() ==  Action.moveBackward)
+			{
+				t.incAvancement(Mobile.vitesseAvancement);
+				return true;
+			}
+			else
+			{
+				
+				t.decAvancement(Mobile.vitesseAvancement);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void iter(){
 		/**
 	 	* lance la prochaine action de tout les éléments du Terrain
 	 	*/
 		
-		int i = 0;
-		
-		for(Tank t : getTanks()){
-
-			System.out.println("TANK!");
-			t.lancerIA();
-			t.reduireTempsRestant();
-		}
+//		int i = 0;
+	/*	if (map.getProjectile() == null)
+		{
+			int k = getTanks().size();
+			
+				for (int l = 0; l < k; l++ )
+				{
+					Tank t = getTanks().get(l);
+				System.out.println("TANK!");
+				
+			
+					t.lancerIA();
+					t.reduireTempsRestant();
+				}
+		}*/
 		/*
 		
 		for (Projectile p: map.getProjectiles())
@@ -190,11 +213,9 @@ public class Physique {
 						if(i < ps.size())
 							p = ps.get(i);
 					}
-<<<<<<< HEAD
 					else // si il est mort
-=======
-					else
->>>>>>> e34244bdde4e06ada7c785e75e0493313f407c5e
+
+
 						if(Projectile.getIdMort() == -1)
 							p=ps.get(i);
 						else{
@@ -217,11 +238,7 @@ public class Physique {
 
 		//Tank.getIntels().waitForAllActions();
 		
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
 		
 
 		/*
@@ -254,12 +271,24 @@ public class Physique {
 		int mobId;
 		if (map.getProjectile() != null)
 		{
+			if (iterFluidite(map.getProjectile()))
+				return;
+			
 			mobId = map.getProjectile().avancer();
+			
+			try {
+				Thread.sleep(25);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
 			/* Si un tank est détruit et qu'il était placé avant ou à à l'emplacement du tour courant dans la liste, on ne modifie pas le tour courant
 			 * La suppression d'un élément d'un arraylist décale automatiquement tous les autres éléments vers la gauche.
 			 * tour = tour - 1;
 			 */
-			if (mobId != -1)
+			if (mobId != -1) /* Un tank est détruit par le projectile */
 			{
 				for (int j = 0; j < getTanks().size() && j <= tour; j++ )
 				{
@@ -270,23 +299,37 @@ public class Physique {
 					}
 				}
 			}
+			
 		}
 		else
 		{
 			if (getTanks().size() != 0)
 			{
+				t = getTanks().get(tour % getTanks().size());
+				
+				if (iterFluidite(t))
+					return;
+				
+				t.setDeplacementStatus(null);
+				//t.initAvancement();
 				tour = (tour + 1) % getTanks().size();
+				System.out.println("Tour numero "+tour);
 					
 					t = getTanks().get(tour);
+					t.lancerIA();
+					t.reduireTempsRestant();
+				
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					
 					t.getAction();
 				
 					System.out.println("ttank");
-			  /*try {
-			 
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
+			
 			}
 		
 		
