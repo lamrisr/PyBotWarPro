@@ -203,16 +203,20 @@ public class Tank extends Mobile {
 
 		switch (act) {
 		case moveForward:
-			avancer();
-			setDeplacementStatus(Action.moveForward);
-			initAvancement(100);
+			if (avancer() != -2) /*Si le mobile peut avancer */
+			{
+				setDeplacementStatus(Action.moveForward);
+				initAvancement(100);
+			}
 			setLatence(0);
 			break;
 
 		case moveBackward:
-			reculer();
-			setDeplacementStatus(Action.moveBackward);
-			initAvancement(-100);
+			if (reculer() != -2) /*Si le mobile peut reculer */
+			{
+				setDeplacementStatus(Action.moveBackward);
+				initAvancement(-100);
+			}
 			setLatence(0);
 			break;
 

@@ -88,20 +88,21 @@ public abstract class Mobile implements ObjetTT{
 		return val_ret;
 	}
 	
-	protected void reculer()
+	protected int reculer()
 	/**
- 	* permet le mouvement dans le sens de la direction
+ 	* permet le mouvement dans le sens contraire de la direction
  	*/
 	{
 		int old_x = coordX, old_y = coordY;
-		
-		if(map.TestAndSetCase(this,coordX - direction.getDx(),coordY - direction.getDy()) != -2)
+		int val_ret = map.TestAndSetCase(this,coordX - direction.getDx(),coordY - direction.getDy());
+		if( val_ret != -2)
 		{
 			coordX = coordX -direction.getDx();
 			coordY = coordY - direction.getDy();
 			map.erase(old_x,old_y);
 
 		}
+		return val_ret;
 		//System.out.println("type: "+getType()+" id:"+getId()+" newX: "+coordX+" newY: "+coordY);
 
 	}

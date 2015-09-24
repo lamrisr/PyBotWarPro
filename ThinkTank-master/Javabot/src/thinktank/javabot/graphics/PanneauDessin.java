@@ -50,7 +50,7 @@ public class PanneauDessin extends JPanel {
 		}
 		else if (action == Action.turnCounterClockwise)
 		{
-			rotationRequired = Math.toRadians (-90 + (avancement - 10));
+			rotationRequired = Math.toRadians (90 - ((100 - avancement) / 100.0) * 90);
 		}
 		else
 		{

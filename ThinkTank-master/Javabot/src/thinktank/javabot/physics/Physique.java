@@ -305,7 +305,7 @@ public class Physique {
 		{
 			if (getTanks().size() != 0)
 			{
-				t = getTanks().get(tour);
+				t = getTanks().get(tour % getTanks().size());
 				
 				if (iterFluidite(t))
 					return;
