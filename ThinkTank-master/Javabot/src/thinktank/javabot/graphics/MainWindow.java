@@ -32,6 +32,8 @@ public class MainWindow extends JFrame {
 	private static JLabel labelX = new JLabel("  X : ");
 	private static JLabel labelY = new JLabel("  Y : ");
 	
+	public static MainWindow window = new MainWindow();
+	
 
 	/* Coordonnées saisies par le user */
 	private static int setX;
@@ -40,7 +42,7 @@ public class MainWindow extends JFrame {
 	private JPanel container = new JPanel();
 	private JPanel c2 = new JPanel();
 	
-	private static Physique phy;
+	public static Physique phy;
 	
 	
 	/**
@@ -84,7 +86,7 @@ public class MainWindow extends JFrame {
 
 		
 		container.add(game);
-		container.add(c2);
+		//container.add(c2);
 		
 		
 		this.setContentPane(container);
@@ -106,7 +108,7 @@ public class MainWindow extends JFrame {
 	 * Fonction main principale
 	 **/
 	public static void main(String args[]) {
-		final MainWindow window = new MainWindow();
+		
 		
 		// MAP HARD CODE
 		for(int i = 5; i < 10; i++)
@@ -161,8 +163,11 @@ public class MainWindow extends JFrame {
 		});
 		
 		while(true){
-			if(!GraphicInterface.stoped){
+			
+			if(!GraphicInterface.stoped || GraphicInterface.NextStepFlag){
 				window.phy.iter();
+				if(GraphicInterface.NextStepFlag)
+					GraphicInterface.NextStepFlag=false;
 			}
 			window.game.repaint();
 			try {

@@ -7,8 +7,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import jnr.ffi.Struct.sa_family_t;
-
 public class SpriteSet {
 	
 	BufferedImage img[] = new BufferedImage[4]; 

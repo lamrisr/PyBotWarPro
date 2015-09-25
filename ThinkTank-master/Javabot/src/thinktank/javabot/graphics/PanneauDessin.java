@@ -22,8 +22,8 @@ public class PanneauDessin extends JPanel {
 	Physique physique;
 	ObjetTT contenu;
 	SpriteSet sp = new SpriteSet();
-	Sprite mur = new Sprite("ressources/mur.png");
-	Sprite sol = new Sprite("ressources/sol.png");
+	Sprite mur = new Sprite("ressources/wall1.png");
+	Sprite sol = new Sprite("ressources/sand.png");
 	Sprite projectile = new Sprite("ressources/shot.png");
 	AffineTransformOp op;
 	

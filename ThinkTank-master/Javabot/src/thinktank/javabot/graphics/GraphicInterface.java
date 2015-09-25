@@ -8,6 +8,10 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
+
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -18,12 +22,17 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextArea;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  *
@@ -34,7 +43,9 @@ public class GraphicInterface extends javax.swing.JFrame {
     /**
      * Creates new form MainGameWindow
      */
+	private static JFileChooser chooser = new JFileChooser();
 	public static boolean stoped=true;
+	public static boolean NextStepFlag=false;
     public GraphicInterface() {
         initComponents();
     }
@@ -83,7 +94,55 @@ public class GraphicInterface extends javax.swing.JFrame {
 
         jSplitPane3.setRightComponent(jPanel6);
         
-        JLabel TankBBrun = new JLabel("");
+        final JLabel TankBBrun = new JLabel("");
+        MouseListener ms=new MouseListener(){
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				//e.getComponent().getLocationOnScreen().getY()
+				System.out.println("Psition selectionnée: "+(e.getX())/28+","+((e.getY()+536)/20));
+				int xp=(e.getX())/28;
+				int yp=((e.getY()+536)/20);
+				int returnVal = chooser.showOpenDialog(null);
+
+		        if(returnVal == JFileChooser.APPROVE_OPTION) {
+		           System.out.println("You chose to open this file: " +
+		                chooser.getSelectedFile().getName());
+		       
+		        }
+		        
+		        
+		        MainWindow.window.phy.addTank(xp, yp,"ressources/"+chooser.getSelectedFile().getName());
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        };
+        
+        
+        
         TankBBrun.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBBrun.png")));
         
         JLabel TankBCyan = new JLabel("");
@@ -104,11 +163,32 @@ public class GraphicInterface extends javax.swing.JFrame {
         JLabel TankBViolet = new JLabel("");
         TankBViolet.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBViolet.png")));
         
+        TankBBrun.addMouseListener(ms);
+        TankBCyan.addMouseListener(ms);
+        TankBJaune.addMouseListener(ms);
+        TankBRed.addMouseListener(ms);
+        TankBRose.addMouseListener(ms);
+        TankBVert.addMouseListener(ms);
+        TankBViolet.addMouseListener(ms);
+        
+        final JButton btnNextStep = new JButton("Next Step");
         final JButton btnStart = new JButton("Start");
         btnStart.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		stoped=!stoped;
-        		btnStart.setText("Stop");
+        		btnNextStep.setVisible(!btnNextStep.isVisible());
+        		if(stoped)
+        			btnStart.setText("Start");
+        		else
+        			btnStart.setText("Stop");
+        		
+        	}
+        });
+        
+        
+        btnNextStep.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		GraphicInterface.NextStepFlag=true;
         	}
         });
         
@@ -133,14 +213,18 @@ public class GraphicInterface extends javax.swing.JFrame {
         			.addComponent(TankBViolet, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addComponent(btnStart)
-        			.addContainerGap(408, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(btnNextStep)
+        			.addContainerGap(349, Short.MAX_VALUE))
         );
         gl_jPanel6.setVerticalGroup(
         	gl_jPanel6.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_jPanel6.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(gl_jPanel6.createParallelGroup(Alignment.LEADING)
-        				.addComponent(btnStart)
+        				.addGroup(gl_jPanel6.createParallelGroup(Alignment.BASELINE)
+        					.addComponent(btnStart)
+        					.addComponent(btnNextStep))
         				.addComponent(TankBViolet, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
         				.addComponent(TankBVert, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
         				.addComponent(TankBRose, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
