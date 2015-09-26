@@ -3,6 +3,8 @@ package thinktank.javabot.graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
@@ -16,7 +18,7 @@ import thinktank.javabot.physics.Tank;
 
 
 @SuppressWarnings("serial")
-public class PanneauDessin extends JPanel {
+public class PanneauDessin extends JPanel implements MouseListener {
 
 	private static int tailleCase = 24;
 	Physique physique;
@@ -40,13 +42,18 @@ public class PanneauDessin extends JPanel {
 		g.drawRect(x, y - 10, 24, 5);
 	}
 	
+	private void paintSelectedArea(Graphics g, int x, int y)
+	{
+		g.setColor(Color.blue);
+		g.drawRect(x - 15, y - 15, 50, 50);
+	}
+	
 	private AffineTransformOp computeRotation(Image image, Action action, int avancement)
 	{
 		double rotationRequired;
 		if (action == Action.turnClockwise)
 		{
 			rotationRequired = Math.toRadians (-90 + ((100 - avancement) / 100.0) * 90);
-			System.out.println("r: " + (-90 + ((100 - avancement) / 100.0) * 90));
 		}
 		else if (action == Action.turnCounterClockwise)
 		{
@@ -64,6 +71,72 @@ public class PanneauDessin extends JPanel {
 		return op;
 	}
 	
+	
+	private int getPositionXFluide(Tank contenu, int x, int ni)
+	{
+		
+		
+		int posx = x;
+		
+		if (((Tank)contenu).getDeplacementStatus() == Action.moveForward || 
+				((Tank)contenu).getDeplacementStatus() == Action.moveBackward)
+		{
+			switch (ni)
+			{
+				
+				case 2: //GAUCHE
+					posx = (int) (x + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+					
+				break;
+				
+				case 3: //DROITE
+				
+					posx = (int) (x - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+					
+				
+				break;
+				
+				default: //BAS ET HAUT
+					posx = x;
+					break;
+		}
+				}
+		return posx;
+	}
+	
+	private int getPositionYFluide(Tank contenu, int y, int ni)
+	{
+		
+		
+		int posy = y;
+		if (((Tank)contenu).getDeplacementStatus() == Action.moveForward || 
+				((Tank)contenu).getDeplacementStatus() == Action.moveBackward)
+		{
+			switch (ni)
+			{
+				case 0: //HAUT
+					
+					posy = (int) (y + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+				
+				
+				break;
+				
+				case 1: //BAS
+					
+					posy = (int) (y - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
+				
+				break;
+				
+				default: //GAUCHE ET DROITE
+					
+					posy = y;
+
+				break;
+				
+		}
+				}
+		return posy;
+	}
 	/**
 	 * Fonctions de dessins pour les divers éléments du jeu
 	 * @param g Outil de dessin permettant de définir l'affichage à l'écran
@@ -114,48 +187,21 @@ public class PanneauDessin extends JPanel {
 					
 					
 					int vie = Integer.valueOf(((Tank)contenu).getPointsDeVie());
-					int posx = x;
-					int posy = y;
-					if (((Tank)contenu).getDeplacementStatus() == Action.moveForward || 
-							((Tank)contenu).getDeplacementStatus() == Action.moveBackward)
-					{
-						switch (ni)
-						{
-							case 0: //HAUT
-								posx = x ;
-								posy = (int) (y + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-							
-							
-							break;
-							
-							case 1: //BAS
-								posx = x ;
-								posy = (int) (y - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-							
-							break;
-							
-							case 2: //GAUCHE
-								posx = (int) (x + (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-								posy = y;
-		
-							break;
-							
-							default: //DROITE
-							
-								posx = (int) (x - (((Tank)contenu).getAvancement() / 100.0) * tailleCase);
-								posy = y;
-							
-							break;
-					}
-							}
+					
 					 op = computeRotation(
 							sp.getImg(ni), 
 							(((Tank)contenu).getDeplacementStatus()), 
 							(((Tank)contenu).getAvancement())
 									);
+					int posx = getPositionXFluide((Tank) contenu, x, ni);
+					int posy = getPositionYFluide((Tank) contenu, y, ni);
 					g.drawImage(op.filter(sp.getImg(ni), null), posx, posy, /*tailleCase, tailleCase,*/ null);
 					paintLifeStick(g, posx, posy, vie);
 					
+					if (GraphicInterface.getSelectedTank() == (Tank)contenu)
+					{
+						paintSelectedArea(g, posx, posy);
+					}
 				}
 				else if(contenu.getType() == Physique.type.projectile){
 					g.drawImage(projectile.getImg() ,x,y,tailleCase,tailleCase,null);
@@ -166,6 +212,52 @@ public class PanneauDessin extends JPanel {
 		
 		
     }
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getButton() == 1)
+		{
+			for (Tank t: physique.getTanks())
+			{
+				int dy = t.getDirection().getDy();
+				int dx = t.getDirection().getDx();
+				int posX = getPositionXFluide(t, t.getCoordX(), 0);
+				int posY = getPositionYFluide(t, t.getCoordY(), 0);
+				if (e.getX() >= posX - 15 && e.getX() <= posX + 15 && e.getY() <= posY + 15 && e.getY() >= posY - 15)
+				{
+					GraphicInterface.setSelectedTank(t);
+					return;
+				}
+				
+			}
+			GraphicInterface.setSelectedTank(null);
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

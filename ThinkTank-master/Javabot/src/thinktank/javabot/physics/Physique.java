@@ -3,6 +3,7 @@ package thinktank.javabot.physics;
 import java.util.ArrayList;
 
 
+import thinktank.javabot.graphics.GraphicInterface;
 import thinktank.javabot.intelligences.Action;
 
 import thinktank.javabot.sensors.DetectionLigneDroite;
@@ -316,8 +317,11 @@ public class Physique {
 				System.out.println("Tour numero "+tour);
 					
 					t = getTanks().get(tour);
+					//t.getIntel().getScript().convertJVBLayerOutPutToOutPut();
+					
 					t.lancerIA();
 					t.reduireTempsRestant();
+					System.out.println("Ligne courante: "+t.getIntel().getScript().getCurrentLine());
 				
 					try {
 						Thread.sleep(5);
@@ -328,7 +332,7 @@ public class Physique {
 					
 					t.getAction();
 				
-					System.out.println("ttank");
+					
 			
 			}
 		

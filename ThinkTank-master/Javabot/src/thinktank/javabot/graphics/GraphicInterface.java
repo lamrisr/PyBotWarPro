@@ -30,6 +30,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextArea;
+
+import thinktank.javabot.physics.Tank;
+
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -44,8 +47,10 @@ public class GraphicInterface extends javax.swing.JFrame {
      * Creates new form MainGameWindow
      */
 	private static JFileChooser chooser = new JFileChooser();
+	private static Tank selectedTank;
 	public static boolean stoped=true;
 	public static boolean NextStepFlag=false;
+	public static JTextArea textAreaCode;
     public GraphicInterface() {
         initComponents();
     }
@@ -57,6 +62,15 @@ public class GraphicInterface extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    public static Tank getSelectedTank()
+    {
+    	return selectedTank;
+    }
+    
+    public static void setSelectedTank(Tank t)
+    {
+    	selectedTank = t;
+    }
     private void initComponents() {
     	
         jLabel1 = new javax.swing.JLabel();
@@ -101,7 +115,7 @@ public class GraphicInterface extends javax.swing.JFrame {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				//e.getComponent().getLocationOnScreen().getY()
-				System.out.println("Psition selectionnée: "+(e.getX())/28+","+((e.getY()+536)/20));
+				System.out.println("Psition selectionnï¿½e: "+(e.getX())/28+","+((e.getY()+536)/20));
 				int xp=(e.getX())/28;
 				int yp=((e.getY()+536)/20);
 				int returnVal = chooser.showOpenDialog(null);
@@ -248,7 +262,7 @@ public class GraphicInterface extends javax.swing.JFrame {
         	}
         });
         
-        JTextArea textArea = new JTextArea();
+        textAreaCode = new JTextArea();
         
         JList JList_1 = new JList();
         
@@ -275,7 +289,7 @@ public class GraphicInterface extends javax.swing.JFrame {
         								.addComponent(JList_1, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         								.addComponent(lblHelp, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
         						.addComponent(btnDevMode)))
-        				.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+        				.addComponent(textAreaCode, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
         			.addGap(3))
         );
         gl_jPanel1.setVerticalGroup(
@@ -283,7 +297,7 @@ public class GraphicInterface extends javax.swing.JFrame {
         		.addGroup(gl_jPanel1.createSequentialGroup()
         			.addComponent(btnDevMode)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+        			.addComponent(textAreaCode, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(gl_jPanel1.createParallelGroup(Alignment.LEADING)
         				.addComponent(lblHelp)

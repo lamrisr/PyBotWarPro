@@ -27,14 +27,17 @@ public class Intelligence extends Thread {
 	/** The is initialized. */
 	private boolean isInitialized = false; //Verrou d'initialisation.
 	
+	private Script script;
+	
 	/**
 	 *  Reprend le script python pour calculer une nouvelle action à effectuer. (Fonction non bloquante.)
 	 * */
 	public void computeAction()
 	{
 		if(action == Action.scriptCompleted || action == Action.scriptTerminated)
+		{
 			return;
-		
+		}
 		this.setRunning();
 		
 		this.action = Action.noAction;
@@ -71,6 +74,11 @@ public class Intelligence extends Thread {
 	public Action getAction()
 	{
 		return action;
+	}
+	
+	public Script getScript()
+	{
+		return script;
 	}
 	
 	/**
@@ -166,13 +174,17 @@ public class Intelligence extends Thread {
 	{
 		this.setRunning();
 		PythonInterpreter interp = new PythonInterpreter();
-		interp.setOut(System.out);
+		script = new Script(filepath);
+		interp.setOut(script.getJVBLayerOutput());
+		//interp.setOut(System.out);
 		interp.exec("import sys");
+		interp.exec("import inspect");
+		interp.exec("def lineno():\n\treturn inspect.currentframe().f_back.f_lineno");
 		interp.exec("print sys");
 		interp.set("tank", tankR);
 		setInitialized();
 		tankR.bePrepared();
-		interp.execfile(filepath);
+		interp.execfile("ressources/"+script.getTmpFileName());
 		setAction(Action.scriptCompleted);
 		this.noMoreRunning();
 		

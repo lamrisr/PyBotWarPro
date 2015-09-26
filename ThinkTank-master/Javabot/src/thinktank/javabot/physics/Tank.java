@@ -28,7 +28,10 @@ public class Tank extends Mobile {
 	public static Intelligences getIntels() {
 		return intels;
 	}
-
+	public Intelligence getIntel()
+	{
+		return ia;
+	}
 	private int Alea(int valeurMin, int valeurMax) 
 	/**
  	* renvoie un nombre entre borne inférieure et borne supérieure
