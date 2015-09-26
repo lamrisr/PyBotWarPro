@@ -2,6 +2,8 @@ package thinktank.javabot.physics;
 
 import java.util.ArrayList;
 
+import thinktank.javabot.graphics.GraphicInterface;
+
 
 public class Terrain {
 	
@@ -115,7 +117,7 @@ public class Terrain {
  	* @param y  ordonnée
  	*/
 	{
-		Tank t =new Tank(x,y,this,filepath,physique);
+		Tank t =new Tank(x,y,this,filepath,physique,GraphicInterface.TankChoice);
 		tanks.add(t);
 		addObjetTT(t.getCoordX(), t.getCoordY(), t);
 		return t;

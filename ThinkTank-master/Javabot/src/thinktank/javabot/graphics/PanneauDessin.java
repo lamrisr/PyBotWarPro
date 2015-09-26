@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -187,15 +188,27 @@ public class PanneauDessin extends JPanel implements MouseListener {
 					
 					
 					int vie = Integer.valueOf(((Tank)contenu).getPointsDeVie());
+
 					
-					 op = computeRotation(
-							sp.getImg(ni), 
-							(((Tank)contenu).getDeplacementStatus()), 
-							(((Tank)contenu).getAvancement())
-									);
+					 try {
+						op = computeRotation(
+								 sp.getImg(ni,((Tank)contenu).tc), 
+								(((Tank)contenu).getDeplacementStatus()), 
+								(((Tank)contenu).getAvancement())
+										);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					int posx = getPositionXFluide((Tank) contenu, x, ni);
 					int posy = getPositionYFluide((Tank) contenu, y, ni);
-					g.drawImage(op.filter(sp.getImg(ni), null), posx, posy, /*tailleCase, tailleCase,*/ null);
+					try {
+						g.drawImage(op.filter(sp.getImg(ni,((Tank)contenu).tc), null), posx, posy, /*tailleCase, tailleCase,*/ null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					paintLifeStick(g, posx, posy, vie);
 					
 					if (GraphicInterface.getSelectedTank() == (Tank)contenu)

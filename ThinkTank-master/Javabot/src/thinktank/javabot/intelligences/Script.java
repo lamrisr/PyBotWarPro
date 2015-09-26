@@ -12,11 +12,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.xml.stream.XMLStreamWriter;
-
-import org.python.apache.commons.compress.utils.IOUtils;
-
 import thinktank.javabot.graphics.GraphicInterface;
+
 
 /**
 *

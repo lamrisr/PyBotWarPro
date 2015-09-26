@@ -13,22 +13,15 @@ public class SpriteSet {
 	
 	
 	public SpriteSet() {
-		
-		try {
-
-		    img[0] = ImageIO.read(new File("ressources/TankHCyan.png"));
-		    img[1] = ImageIO.read(new File("ressources/TankBCyan.png"));
-		    img[2] = ImageIO.read(new File("ressources/TankGCyan.png"));
-		    img[3] = ImageIO.read(new File("ressources/TankDCyan.png"));
-
-		} catch (IOException e) {
-			System.out.println(e);
-		}
     
     }
 
 
-	public BufferedImage getImg(int num) {
+	public BufferedImage getImg(int num,String tc) throws IOException {
+		img[0] = ImageIO.read(new File("ressources/TankH"+tc+".png"));
+	    img[1] = ImageIO.read(new File("ressources/TankB"+tc+".png"));
+	    img[2] = ImageIO.read(new File("ressources/TankG"+tc+".png"));
+	    img[3] = ImageIO.read(new File("ressources/TankD"+tc+".png"));
 		return img[num];
 	}
 	
