@@ -92,16 +92,16 @@ public class Physique {
 		map.addTank();
 	}
 	
-	public void addTank(String filepath)
+	public Tank addTank(String filepath)
 	/**
 	 * ajoute un tank avec l'ia dans le fichier filepath
 	 * @param filepath  position du fichier
 	 */
 	{
-		map.addTank(filepath);
+		return map.addTank(filepath);
 	}
 	
-	public void addTank(int x, int y, String filepath)
+	public Tank addTank(int x, int y, String filepath)
 	/**
 	 * ajoute un tank avec l'ia dans le fichier filepath à la position(x,y)
 	 * @param x  coordonée x du tank
@@ -110,9 +110,10 @@ public class Physique {
 	 */
 	{
 		if(estLibre(x, y))
-			map.addTank(x,y,filepath,this);
+			return map.addTank(x,y,filepath,this);
 		else
 			System.out.println("pas libre ! ");
+		return null;
 	}
 	
 	/*public ArrayList<Projectile> getProjectiles()
@@ -320,9 +321,10 @@ public class Physique {
 					//t.getIntel().getScript().convertJVBLayerOutPutToOutPut();
 					
 					t.lancerIA();
+					
 					t.reduireTempsRestant();
 					System.out.println("Ligne courante: "+t.getIntel().getScript().getCurrentLine());
-				
+					
 					try {
 						Thread.sleep(5);
 					} catch (InterruptedException e) {
@@ -331,6 +333,10 @@ public class Physique {
 					
 					
 					t.getAction();
+					if (GraphicInterface.getSelectedTank() == t)
+					{
+						GraphicInterface.updateHighlight(t.getIntel().getScript().getCurrentLine());
+					}
 				
 					
 			

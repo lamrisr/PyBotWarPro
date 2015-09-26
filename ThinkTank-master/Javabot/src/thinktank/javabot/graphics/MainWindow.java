@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 
@@ -18,11 +21,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import thinktank.javabot.physics.Physique;
+import thinktank.javabot.physics.Tank;
 
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame {
-	private PanneauDessin game;
+public class MainWindow extends JFrame{
+	private static PanneauDessin game;
 
 	 
 	private static JFileChooser chooser = new JFileChooser();
@@ -44,6 +48,7 @@ public class MainWindow extends JFrame {
 	/**
 	 * Affichage principal de l'application
 	 **/
+	
 	public MainWindow() {
 		
 		int lx = 30;
@@ -76,6 +81,7 @@ public class MainWindow extends JFrame {
 		
 		
 		NewGame.jPanel5.add(container);
+		
 		
 		
 		
@@ -141,7 +147,11 @@ public class MainWindow extends JFrame {
 		
 	}
 	
-	
+	public static PanneauDessin getPanneauDessin()
+	{
+		return game;
+	}
+
 
 
 }

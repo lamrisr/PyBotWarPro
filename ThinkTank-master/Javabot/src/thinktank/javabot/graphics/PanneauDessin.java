@@ -192,6 +192,7 @@ public class PanneauDessin extends JPanel implements MouseListener {
 
 					
 					 try {
+						 
 						op = computeRotation(
 								 sp.getImg(ni,((Tank)contenu).tc), 
 								(((Tank)contenu).getDeplacementStatus()), 
@@ -246,7 +247,7 @@ public class PanneauDessin extends JPanel implements MouseListener {
 				System.out.println("TANK POSX: "+posX+ " POSY: "+posY);
 				if (e.getX() >= posX - tailleCase && e.getX() <= posX + tailleCase && e.getY() <= posY + tailleCase && e.getY() >= posY - tailleCase)
 				{
-					System.out.println("SELECTED");
+					
 					GraphicInterface.setSelectedTank(t);
 					return;
 				}
@@ -280,6 +281,9 @@ public class PanneauDessin extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public Physique getPhysique()
+	{
+		return physique;
+	}
 
 }

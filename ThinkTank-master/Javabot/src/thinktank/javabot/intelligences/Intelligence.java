@@ -116,6 +116,7 @@ public class Intelligence extends Thread {
 		this.tankR = new TankRemote(this,tankPhy);
 		this.filepath = filepath;
 		this.intelligences = intelligences;
+		script = new Script(filepath);
 	}
 	
 	/**
@@ -174,7 +175,7 @@ public class Intelligence extends Thread {
 	{
 		this.setRunning();
 		PythonInterpreter interp = new PythonInterpreter();
-		script = new Script(filepath);
+		
 		interp.setOut(script.getJVBLayerOutput());
 		//interp.setOut(System.out);
 		interp.exec("import sys");

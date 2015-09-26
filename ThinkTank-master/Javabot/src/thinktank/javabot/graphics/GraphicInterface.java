@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 
@@ -16,6 +19,7 @@ import thinktank.javabot.intelligences.TankRemote;
 
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
@@ -38,12 +42,15 @@ import thinktank.javabot.physics.Tank;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
 
 /**
  *
  * @author Haroun
  */
-public class GraphicInterface extends javax.swing.JFrame {
+public class GraphicInterface extends javax.swing.JFrame implements WindowListener {
 
     /**
      * Creates new form MainGameWindow
@@ -56,8 +63,10 @@ public class GraphicInterface extends javax.swing.JFrame {
 	public static boolean stoped=true;
 	public static boolean NextStepFlag=false;
 	public static JTextArea textAreaCode;
+	public static Highlighter currentLineExecution;
     public GraphicInterface() {
         initComponents();
+        this.addWindowListener(this);
     }
 
     /**
@@ -75,6 +84,32 @@ public class GraphicInterface extends javax.swing.JFrame {
     public static void setSelectedTank(Tank t)
     {
     	selectedTank = t;
+    	updateCodeArea();
+    }
+    
+    public static void updateCodeArea()
+    {
+    	if (selectedTank != null)
+    	{
+    		textAreaCode.setText(selectedTank.getIntel().getScript().getInstructions());
+    	}
+    	else
+    	{
+    		textAreaCode.setText("");
+    	}
+    }
+    
+    public static void updateHighlight(int line)
+    {
+    	
+    	currentLineExecution = textAreaCode.getHighlighter();
+    	currentLineExecution.removeAllHighlights();
+    	try {
+			currentLineExecution.addHighlight(selectedTank.getIntel().getScript().startPositionLine(line), selectedTank.getIntel().getScript().endPositionLine(line), new DefaultHighlighter.DefaultHighlightPainter(Color.cyan));
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     private void initComponents() {
     	
@@ -135,7 +170,7 @@ public class GraphicInterface extends javax.swing.JFrame {
 		        }
 		        
 		        
-		        MainWindow.window.phy.addTank(xp, yp,"ressources/"+chooser.getSelectedFile().getName());
+		        selectedTank = MainWindow.window.phy.addTank(xp, yp,"ressources/"+chooser.getSelectedFile().getName());
 			}
 			
 			@Override
@@ -375,4 +410,56 @@ public class GraphicInterface extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     public javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane3;
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		/* Suppression des fichiers temporaires à la fermeture de l'application */
+		for (Tank t: MainWindow.getPanneauDessin().getPhysique().getTanks())
+		{
+			File file = new File("ressources/"+t.getIntel().getScript().getTmpFileName());
+			file.delete();
+		}
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		/* Suppression des fichiers temporaires à la fermeture de l'application */
+		for (Tank t: MainWindow.getPanneauDessin().getPhysique().getTanks())
+		{
+			File file = new File("ressources/"+t.getIntel().getScript().getTmpFileName());
+			file.delete();
+		}
+		System.exit(0);
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

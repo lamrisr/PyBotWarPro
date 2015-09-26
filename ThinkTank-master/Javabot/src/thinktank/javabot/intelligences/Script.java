@@ -32,12 +32,14 @@ public class Script {
 	private Writer JVBLayerOutput = new StringWriter(); /*Redirection de la sortie standard, composée de la surcouche Javabot (numéros de lignes)*/
 	public Script(String filename)
 	{
+		
 		this.filename = filename;
 		importInstructionsFromFile(this.filename);
 		generateTmpFileName();
 		//System.out.println("generated file: "+tmpFileName);
 		//System.out.println("Content:  "+tmpFileContent);
 		writeTmpFile();
+		
 	/*	watchOutput = new WatchOutput(this);
 		watchOutput.start();*/
 	}
@@ -73,30 +75,30 @@ public class Script {
 		return tmpFileName;
 	}
 	
-	/*public void convertJVBLayerOutPutToOutPut()
+	/* Retourne la position du premier caractère de la ligne à mettre en surbrillance*/
+	public int startPositionLine(int line)
 	{
-		System.out.println("JVB ici");
-		String buff = JVBLayerOutput.toString();
-		
-		String lines[] = buff.split("\\n");
-		for (int i = 0; i < lines.length; i++)
+		int i = 0;
+		String[] lines = instructions.split("\n");
+		for (int j = 0; j < line - 1; j++)
 		{
-			System.out.println("JVB: "+lines[i]);
-			if (lines[i].length() > 9 && lines[i].substring(0, 9).equals("<lineJVB>"))
-			{
-				String strCurrentLineTmp = lines[i].substring(9);
-				currentLine = Integer.parseInt(strCurrentLineTmp) - (Integer.parseInt(strCurrentLineTmp) / 2);
-				
-			}
-			else
-			{
-				output += lines[i]+'\n';
-			}
-			//System.out.println("l: "+lines[i]);
-			//currentLine = Integer.parseInt(lines[i]) - (Integer.parseInt(lines[i]) / 2);
-			
+			i += lines[j].length() + 1;
 		}
-	}*/
+		
+		return i;
+	}
+	
+	public int endPositionLine(int line)
+	{
+		int i = 0;
+		String[] lines = instructions.split("\n");
+		for (int j = 0; j < line ; j++)
+		{
+			i += lines[j].length() + 1;
+		}
+		
+		return i;
+	}
 	
 	/* Génère un nom aléatoire pour le fichier .py temporaire */
 	private void generateTmpFileName()
@@ -120,14 +122,7 @@ public class Script {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		/*try {
-			PrintWriter writer =  new PrintWriter(new BufferedWriter
-					   (new FileWriter("Ressources/"+tmpFileName)));
-			writer.print(tmpFileContent);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+	
 	}
 	
 	
