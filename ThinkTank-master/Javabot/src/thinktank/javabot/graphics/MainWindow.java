@@ -21,16 +21,9 @@ import thinktank.javabot.physics.Physique;
 public class MainWindow extends JFrame {
 	private PanneauDessin game;
 
-	private static JButton editer = new JButton("AJOUTER TANK");
 	 
 	private static JFileChooser chooser = new JFileChooser();
     
-
-	private static JTextField inputX = new JTextField(); 
-	private static JTextField inputY = new JTextField();
-	
-	private static JLabel labelX = new JLabel("  X : ");
-	private static JLabel labelY = new JLabel("  Y : ");
 	
 	public static MainWindow window = new MainWindow();
 	
@@ -61,32 +54,15 @@ public class MainWindow extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 	
-		inputX.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputX.getMinimumSize().height));
-        add(inputX);
-        inputY.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputY.getMinimumSize().height));
-        add(inputY);
+		
         
 
 		container.setLayout(new BoxLayout(container,BoxLayout.PAGE_AXIS));
 		
 
-		c2.setLayout(new BoxLayout(c2, BoxLayout.LINE_AXIS));
-		//c2.setLayout(new FlowLayout());
-		c2.setSize(new Dimension(10,10));
-
-		c2.add(editer);
-		
-		c2.add(labelX);
-		c2.add(inputX);
-		
-		c2.add(labelY);
-		c2.add(inputY);
-
-		c2.setSize(25, 25);
-
 		
 		container.add(game);
-		//container.add(c2);
+		
 		
 		
 		this.setContentPane(container);
@@ -138,29 +114,6 @@ public class MainWindow extends JFrame {
 		}
 		
 		
-		editer.addActionListener(new ActionListener()
-		{
-	         
-		    @Override
-		    public void actionPerformed(ActionEvent e)
-		    {
-		         
-
-		    	
-		        int returnVal = chooser.showOpenDialog(null);
-
-		        if(returnVal == JFileChooser.APPROVE_OPTION) {
-		           System.out.println("You chose to open this file: " +
-		                chooser.getSelectedFile().getName());
-		       
-		        }
-		        
-		        setX = Integer.valueOf(inputX.getText());
-		        setY = Integer.valueOf(inputY.getText());
-		        
-		        window.phy.addTank(setX, setY,"ressources/"+chooser.getSelectedFile().getName());
-		    }
-		});
 		
 		while(true){
 			
