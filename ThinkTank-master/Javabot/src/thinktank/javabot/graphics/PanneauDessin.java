@@ -33,6 +33,7 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	public PanneauDessin(Physique physique){
 		super();
 		this.physique =  physique;
+		this.addMouseListener(this);
 	}
 	
 	private void paintLifeStick(Graphics g, int x, int y, int vie)
@@ -230,14 +231,22 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getButton() == 1)
 		{
+			System.out.println("x: "+e.getX()+"y: "+e.getY());
 			for (Tank t: physique.getTanks())
 			{
 				int dy = t.getDirection().getDy();
 				int dx = t.getDirection().getDx();
-				int posX = getPositionXFluide(t, t.getCoordX(), 0);
-				int posY = getPositionYFluide(t, t.getCoordY(), 0);
-				if (e.getX() >= posX - 15 && e.getX() <= posX + 15 && e.getY() <= posY + 15 && e.getY() >= posY - 15)
+				int ni = 0;
+				if (dy > 0)
+					ni = 1;
+				else if (dx != 0)
+					ni = dx < 0 ? 2 : 3;
+				int posX = getPositionXFluide(t, t.getCoordX()*tailleCase, ni);
+				int posY = getPositionYFluide(t, t.getCoordY()*tailleCase, ni);
+				System.out.println("TANK POSX: "+posX+ " POSY: "+posY);
+				if (e.getX() >= posX - tailleCase && e.getX() <= posX + tailleCase && e.getY() <= posY + tailleCase && e.getY() >= posY - tailleCase)
 				{
+					System.out.println("SELECTED");
 					GraphicInterface.setSelectedTank(t);
 					return;
 				}
@@ -249,8 +258,8 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseEntered(MouseEvent e) {
+		//System.out.println("x: "+e.getX()+"y: "+e.getY());
 		
 	}
 
@@ -261,8 +270,8 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent e) {
+		//System.out.println("x: "+e.getX()+"y: "+e.getY());
 		
 	}
 

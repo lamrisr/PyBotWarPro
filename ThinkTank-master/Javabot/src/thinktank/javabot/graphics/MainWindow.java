@@ -1,9 +1,12 @@
 package thinktank.javabot.graphics;
 
 import java.awt.Dimension;
+import java.awt.Point;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 
@@ -54,7 +57,6 @@ public class MainWindow extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 	
-		
         
 
 		container.setLayout(new BoxLayout(container,BoxLayout.PAGE_AXIS));
@@ -74,8 +76,14 @@ public class MainWindow extends JFrame {
 		
 		
 		NewGame.jPanel5.add(container);
+		
+		
+		
 		//NewGame.jPanel5.add(c2);
 		NewGame.setVisible(true);
+		Point p = NewGame.getLocationOnScreen();
+		System.out.println(p.getX());
+		System.out.println(p.getY());
 		this.setVisible(false); 
 	
 	}
@@ -132,5 +140,8 @@ public class MainWindow extends JFrame {
 		}
 		
 	}
+	
+	
+
 
 }

@@ -124,8 +124,8 @@ public class GraphicInterface extends javax.swing.JFrame {
 				System.out.println("Position selectionn�e: "+(e.getX())/28+","+((e.getY()+536)/20));
 				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
 				System.out.println("Selectionner :"+TankChoice);
-				xp=((e.getX())/28)+9;
-				yp=((e.getY()+536)/20)-3;
+				xp=((e.getX())/28);
+				yp=((e.getY()+536)/20);
 				int returnVal = chooser.showOpenDialog(null);
 
 		        if(returnVal == JFileChooser.APPROVE_OPTION) {
