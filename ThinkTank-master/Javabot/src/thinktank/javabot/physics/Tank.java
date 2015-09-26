@@ -2,6 +2,7 @@ package thinktank.javabot.physics;
 
 import java.util.Random;
 
+import thinktank.javabot.graphics.GraphicInterface;
 import thinktank.javabot.intelligences.Action;
 import thinktank.javabot.intelligences.Intelligence;
 import thinktank.javabot.intelligences.Intelligences;
@@ -15,6 +16,7 @@ public class Tank extends Mobile {
 	private Intelligence ia;
 	private static Intelligences intels = new Intelligences();
 	private Sensors sensor;
+	public String tc;
 	
 
 	public Sensors getSensor() {
@@ -76,9 +78,9 @@ public class Tank extends Mobile {
 		ia.initialize();
 	}
 
-	protected Tank(int x, int y, Terrain map) {
+	protected Tank(int x, int y, Terrain map,String tc) {
 		setId(newId());
-
+		this.tc=tc;
 		setCoordX(x);
 		setCoordY(y);
 
@@ -91,9 +93,9 @@ public class Tank extends Mobile {
 		
 	}
 	
-	protected Tank(int x, int y, Terrain map,String filepath, Physique physique) {
+	protected Tank(int x, int y, Terrain map,String filepath, Physique physique,String tc) {
 		setId(newId());
-
+		this.tc=tc;
 		setCoordX(x);
 		setCoordY(y);
 

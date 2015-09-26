@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -148,12 +149,22 @@ public class PanneauDessin extends JPanel {
 							break;
 					}
 							}
-					 op = computeRotation(
-							sp.getImg(ni), 
-							(((Tank)contenu).getDeplacementStatus()), 
-							(((Tank)contenu).getAvancement())
-									);
-					g.drawImage(op.filter(sp.getImg(ni), null), posx, posy, /*tailleCase, tailleCase,*/ null);
+					 try {
+						op = computeRotation(
+								sp.getImg(ni,((Tank)contenu).tc), 
+								(((Tank)contenu).getDeplacementStatus()), 
+								(((Tank)contenu).getAvancement())
+										);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						g.drawImage(op.filter(sp.getImg(ni,((Tank)contenu).tc), null), posx, posy, /*tailleCase, tailleCase,*/ null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					paintLifeStick(g, posx, posy, vie);
 					
 				}

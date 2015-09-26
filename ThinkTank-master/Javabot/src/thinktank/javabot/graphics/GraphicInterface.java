@@ -12,6 +12,8 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
 
 import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 
+import thinktank.javabot.intelligences.TankRemote;
+
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -43,6 +45,9 @@ public class GraphicInterface extends javax.swing.JFrame {
     /**
      * Creates new form MainGameWindow
      */
+	public static String TankChoice="";
+	public static int xp=0;
+	public static int yp=0;
 	private static JFileChooser chooser = new JFileChooser();
 	public static boolean stoped=true;
 	public static boolean NextStepFlag=false;
@@ -101,9 +106,11 @@ public class GraphicInterface extends javax.swing.JFrame {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				//e.getComponent().getLocationOnScreen().getY()
-				System.out.println("Psition selectionnée: "+(e.getX())/28+","+((e.getY()+536)/20));
-				int xp=(e.getX())/28;
-				int yp=((e.getY()+536)/20);
+				System.out.println("Position selectionnée: "+(e.getX())/28+","+((e.getY()+536)/20));
+				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
+				System.out.println("Selectionner :"+TankChoice);
+				xp=((e.getX())/28)+9;
+				yp=((e.getY()+536)/20)-3;
 				int returnVal = chooser.showOpenDialog(null);
 
 		        if(returnVal == JFileChooser.APPROVE_OPTION) {
