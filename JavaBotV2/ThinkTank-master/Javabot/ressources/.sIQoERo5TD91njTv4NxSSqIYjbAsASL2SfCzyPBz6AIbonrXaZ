@@ -1,0 +1,4 @@
+tank.moveForward(lineno())
+tank.moveBackward(lineno())
+tank.shoot(lineno())
+tank.distanceOfForwardObstacle(lineno())
