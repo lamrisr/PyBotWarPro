@@ -1,0 +1,41 @@
+Voilà la liste des opérations opérées sur le code du projet existant
+(16/09/15 - Gabriel)
+Note: l'ensemble des lignes supprimées sont maintenant en commentaire dans le code
+
+Class PanneauDessin:
+- Méthode paintComponent:
+	Modification des lignes 64 à 71
+
+Class Direction:
+- Modification des méthodes tournerDroite() et tournerGauche()
+
+Class Mobile:
+- Modification de la méthode newId()
+- Modification de la méthode avancer()
+- Modification de la méthode reculer()
+
+Class Terrain:
+- Suppression de la liste de projectiles:
+Il faut un seul projectile à la fois sur le terrain !
+Ca rendra possible la fluidité des animations sans toucher à tout le code
+et c'est plus logique (Sur la V1 du projet, les projectiles et les tanks ont la même vitesse. Dans notre nouvelle version, dès qu'un tank tire, le projectile réalise sa trajectoire jusqu'à rencontrer un obstacle avant d'exécuter les instructions suivantes.)
+
+- Insertion d'un attribut unique "projectile" pour le projectile présent sur le terrain
+- Ajout du getter associé
+- Modification de la méthode getMobFromId()
+- Modification de la méthode getProFromId()
+- Suppression de la méthode addProjectile()
+- Ajout du setter setProjectile()
+- Modification de la méthode removeProjectile()
+- Modification de la méthode TestAndSetCase() (Suppression du code mort dû à ces modifications et modification de la valeur de retour)
+
+Class Tank:
+- Modification de la méthode tirer()
+
+Class Physique:
+- Ajout d'un attribut "tour" indiquant le tank courant jouant.
+- Suppression de la méthode getProjectiles()
+- Modification de la méthode getMobiles()
+
+Class Projectile:
+- Modification de la méthode avancer()
