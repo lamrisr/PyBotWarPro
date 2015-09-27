@@ -1,0 +1,28 @@
+Mercredi 16/09:
+
+Faire diagrammes UML:
+
+Diagramme de cas d'utilisation
+Diagramme de classe
+Diagramme de séquence
+Diagramme d'états-transitions
+
+
+Corriger code source: restructurer
+
+
+Générer code interface
+
+Répartition pour le 21/09:
+
+Gabriel: Refactoring du code
+
+Haroun: Génération du code de l'interface (en java)
+
+Luc: UML cas utilisation + classe
+
+Tian:  UML Etat transition
+
+Louis: UML Séquence
+
+Houssem: UML Classe + fouille du code
