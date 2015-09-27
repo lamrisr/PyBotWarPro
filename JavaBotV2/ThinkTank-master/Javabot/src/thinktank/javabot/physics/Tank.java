@@ -62,6 +62,12 @@ public class Tank extends Mobile {
 		ia.initialize();
 	}
 	
+	public void setIntelligence(Intelligence i)
+	{
+		ia = i;
+		ia.start();
+	}
+	
 	protected Tank(Terrain map, String filepath) {
 		setId(newId());
 		setCoordX(Alea(1, map.tailleX() - 1));

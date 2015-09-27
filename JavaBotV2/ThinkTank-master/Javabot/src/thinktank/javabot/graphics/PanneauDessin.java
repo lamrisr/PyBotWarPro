@@ -252,6 +252,7 @@ public class PanneauDessin extends JPanel implements MouseListener {
 				}
 				
 			}
+			GraphicInterface.checkCodeUpdates();
 			GraphicInterface.setSelectedTank(null);
 		}
 		

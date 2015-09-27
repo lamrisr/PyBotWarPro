@@ -71,10 +71,29 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     
     public static void setSelectedTank(Tank t)
     {
+    	checkCodeUpdates();
     	selectedTank = t;
     	updateCodeArea();
     }
     
+    public static void checkCodeUpdates()
+    {
+    	/* On vérifie si il faut mettre à jour la liste d'instructions.
+    	 *  Y-a-t-il eu des modifications sur le script Python ?*/
+    	if (selectedTank != null)
+    	{
+    		System.out.println("tt"+textAreaCode.getText());
+    		if (!textAreaCode.getText().equals(selectedTank.getIntel().getScript().getInstructions()))
+    		{
+    			System.out.println("aa");
+    			selectedTank.getIntel().getScript().updateInstructions(textAreaCode.getText());
+    		}
+    		else
+    		{
+    			System.out.println("nej");
+    		}
+    	}
+    }
     public static void updateCodeArea()
     {
     	if (selectedTank != null)
@@ -220,12 +239,19 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         final JButton btnStart = new JButton("Start");
         btnStart.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		stoped=!stoped;
+        		stoped = !stoped;
         		btnNextStep.setVisible(!btnNextStep.isVisible());
         		if(stoped)
+        		{
         			btnStart.setText("Start");
+        			textAreaCode.setEditable(true);
+        		}
         		else
+        		{
+        			checkCodeUpdates();
         			btnStart.setText("Stop");
+        			textAreaCode.setEditable(false);
+        		}
         		
         	}
         });

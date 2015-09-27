@@ -29,6 +29,8 @@ public class Intelligence extends Thread {
 	
 	private Script script;
 	
+	private PythonInterpreter interp;
+	
 	/**
 	 *  Reprend le script python pour calculer une nouvelle action à effectuer. (Fonction non bloquante.)
 	 * */
@@ -42,6 +44,16 @@ public class Intelligence extends Thread {
 		
 		this.action = Action.noAction;
 		tankR.unlock();
+	}
+	
+	public Intelligences getIntels()
+	{
+		return intelligences;
+	}
+	
+	public TankRemote getTankR()
+	{
+		return tankR;
 	}
 	
 	/**
@@ -116,7 +128,14 @@ public class Intelligence extends Thread {
 		this.tankR = new TankRemote(this,tankPhy);
 		this.setFilepath(filepath);
 		this.intelligences = intelligences;
-		script = new Script(filepath);
+		script = new Script(filepath, this);
+	}
+	
+	Intelligence(String filepath, Intelligences intelligences, Tank tankPhy, Script script){
+		this.tankR = new TankRemote(this,tankPhy);
+		this.setFilepath(filepath);
+		this.intelligences = intelligences;
+		this.script = script;
 	}
 	
 	/**
@@ -169,12 +188,9 @@ public class Intelligence extends Thread {
 		this.setAction(Action.scriptTerminated);
 	}
 	
-	/**
-	 *  Thread dédié à l'interpréteur python pour l'IA utilisateur. */
-	public void run()
+	public void initInterpreter()
 	{
-		this.setRunning();
-		PythonInterpreter interp = new PythonInterpreter();
+		interp = new PythonInterpreter();
 		
 		interp.setOut(script.getJVBLayerOutput());
 		//interp.setOut(System.out);
@@ -183,10 +199,24 @@ public class Intelligence extends Thread {
 		interp.exec("def lineno():\n\treturn inspect.currentframe().f_back.f_lineno");
 		interp.exec("print sys");
 		interp.set("tank", tankR);
-		setInitialized();
 		tankR.bePrepared();
+	}
+	
+	public void execInterpreter()
+	{
 		interp.execfile("ressources/"+script.getTmpFileName());
 		setAction(Action.scriptCompleted);
+	}
+	
+	/**
+	 *  Thread dédié à l'interpréteur python pour l'IA utilisateur. */
+	public void run()
+	{
+		this.setRunning();
+		initInterpreter();
+		setInitialized();
+		
+		execInterpreter();
 		this.noMoreRunning();
 		
 		interp.close();

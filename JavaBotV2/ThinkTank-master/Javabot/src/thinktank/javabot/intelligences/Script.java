@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import thinktank.javabot.graphics.GraphicInterface;
+import thinktank.javabot.physics.Tank;
 
 
 /**
@@ -27,10 +28,12 @@ public class Script {
 	private String  tmpFileContent = "";
 	private String output; /* Sortie telle qu'elle est affichée dans l'inferface graphique */
 	private Writer JVBLayerOutput = new StringWriter(); /*Redirection de la sortie standard, composée de la surcouche Javabot (numéros de lignes)*/
-	public Script(String filename)
+	private Intelligence intelligence;
+	public Script(String filename, Intelligence intelligence)
 	{
 		
 		this.filename = filename;
+		this.intelligence = intelligence;
 		importInstructionsFromFile(this.filename);
 		generateTmpFileName();
 		//System.out.println("generated file: "+tmpFileName);
@@ -122,6 +125,36 @@ public class Script {
 	
 	}
 	
+	private String addLayer(String instr)
+	{
+		String tmpFileContentLayer = instr;
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.doNothing\\(\\)", "tank.doNothing(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.moveForward\\(\\)", "tank.moveForward(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.moveBackward\\(\\)", "tank.moveBackward(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.turnClockwise\\(\\)", "tank.turnClockwise(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.turnCounterClockwise\\(\\)", "tank.turnCounterClockwise(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.shoot\\(\\)", "tank.shoot(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.radar\\(\\)", "tank.radar(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.distanceOfForwardObstacle\\(\\)", "tank.distanceOfForwardObstacle(lineno())");
+		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.typeOfForwardObstacle\\(\\)", "tank.typeOfForwardObstacle(lineno())");
+		return tmpFileContentLayer;
+	}
+	
+	public void updateInstructions(String newInstructions)
+	{
+		System.out.println("NEW INSTRUCTIONS: "+newInstructions);
+		instructions = newInstructions;
+		tmpFileContent= addLayer(instructions);
+		writeTmpFile();
+		Tank tmp = intelligence.getTankR().tankPhy;
+		System.out.println("aie");
+		intelligence = new Intelligence(filename, intelligence.getIntels(), tmp, this);
+		System.out.println("aie2");
+		tmp.setIntelligence(intelligence);
+		System.out.println("OK");
+		//intelligence.initInterpreter();
+		//intelligence.execInterpreter();
+	}
 	
 	private void importInstructionsFromFile(String path)
 	{
@@ -137,19 +170,10 @@ public class Script {
 				instructions += sCurrentLine+'\n';
 				//tmpFileContent += "print str(inspect.currentframe().f_back.f_lineno)";
 				
-						
+						tmpFileContent = addLayer(instructions);
 				
 			}
-			tmpFileContent = instructions;
-			tmpFileContent = tmpFileContent.replaceAll("tank.doNothing\\(\\)", "tank.doNothing(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.moveForward\\(\\)", "tank.moveForward(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.moveBackward\\(\\)", "tank.moveBackward(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.turnClockwise\\(\\)", "tank.turnClockwise(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.turnCounterClockwise\\(\\)", "tank.turnCounterClockwise(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.shoot\\(\\)", "tank.shoot(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.radar\\(\\)", "tank.radar(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.distanceOfForwardObstacle\\(\\)", "tank.distanceOfForwardObstacle(lineno())");
-			tmpFileContent = tmpFileContent.replaceAll("tank.typeOfForwardObstacle\\(\\)", "tank.typeOfForwardObstacle(lineno())");
+			
 			
 			GraphicInterface.textAreaCode.setText(instructions);
 
