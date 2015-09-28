@@ -25,6 +25,7 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 import thinktank.javabot.physics.Tank;
 
@@ -132,42 +133,47 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 			e.printStackTrace();
 		}
     }
+    
     private void initComponents() {
-    	
+    	// sert a rien
         jLabel1 = new javax.swing.JLabel();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jSplitPane3 = new javax.swing.JSplitPane();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new JPanel();
-
-        jPanel1 = new javax.swing.JPanel();
-        
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
-
-        jSplitPane3.setTopComponent(jPanel5);
+        // jPanel1: Panneau de gauche de débogage
+        jPanel1 = new javax.swing.JPanel();
+        jPanel1.setPreferredSize(new Dimension(300, 0));
+        jPanel1.setMinimumSize(new Dimension(300, 0));
+        jPanel1.setMaximumSize(new Dimension(300, 0)); 
         
+        // jPanel5: Panneau de jeu
+        jPanel5 = new javax.swing.JPanel();
         jPanel5.setPreferredSize(new Dimension(720, 520));
         jPanel5.setMinimumSize(new Dimension(720, 520));
         jPanel5.setMaximumSize(new Dimension(720, 520));
         jPanel5.setLayout(null);
+
+        // jPanel6: Panneau de droite de sélection des tanks
+        jPanel6 = new JPanel();
         jPanel6.setPreferredSize(new Dimension(720, 50));
         jPanel6.setMinimumSize(new Dimension(720, 50));
         jPanel6.setMaximumSize(new Dimension(720, 50));
-        jPanel1.setPreferredSize(new Dimension(180, 0));
-        jPanel1.setMinimumSize(new Dimension(180, 0));
-        jPanel1.setMaximumSize(new Dimension(180, 0));
+
+        // jSplitPane3: Panneau de droite
+        jSplitPane3 = new javax.swing.JSplitPane();
+        jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane3.setTopComponent(jPanel5);        
+        jSplitPane3.setRightComponent(jPanel6);
+        
+        // jSplitPane1: Panneau de gauche
+        jSplitPane1 = new javax.swing.JSplitPane();
         jSplitPane1.getLeftComponent().setMinimumSize(new Dimension());
     	//pane.setDividerLocation(0.0d);
         jSplitPane1.getRightComponent().setMinimumSize(new Dimension());
     	//pane.setDividerLocation(1.0d);
-
-
-        jSplitPane3.setRightComponent(jPanel6);
+        jSplitPane1.setRightComponent(jSplitPane3);
+        jSplitPane1.setLeftComponent(jPanel1);
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
         final JLabel TankBBrun = new JLabel("");
         MouseListener ms=new MouseListener(){
@@ -191,7 +197,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 		        }
 		        
 		        
-		        setSelectedTank(MainWindow.phy.addTank(xp, yp,"ressources/"+chooser.getSelectedFile().getName()));
+		        setSelectedTank(MainWindow.phy.addTank(xp, yp,"src/ressources/"+chooser.getSelectedFile().getName()));
 			}
 			
 			@Override
@@ -220,7 +226,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         };
         
         
-        
+        // Définition des icones de tank dans le menu de selection
         TankBBrun.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBBrun.png")));
         
         JLabel TankBCyan = new JLabel("");
@@ -241,6 +247,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         JLabel TankBViolet = new JLabel("");
         TankBViolet.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBViolet.png")));
         
+        // Association de la gestion du drag & drop
         TankBBrun.addMouseListener(ms);
         TankBCyan.addMouseListener(ms);
         TankBJaune.addMouseListener(ms);
@@ -249,6 +256,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         TankBVert.addMouseListener(ms);
         TankBViolet.addMouseListener(ms);
         
+        // Definition des boutons du menu (start et stop)
         final JButton btnNextStep = new JButton("Etape suivante");
         final JButton btnStart = new JButton("Démarrer");
         btnStart.addActionListener(new ActionListener() {
@@ -269,15 +277,14 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         		
         	}
         });
-        
-        
+             
         btnNextStep.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		GraphicInterface.NextStepFlag=true;
         	}
         });
         
-        
+        // Organisation du Panel menu
         GroupLayout gl_jPanel6 = new GroupLayout(jPanel6);
         gl_jPanel6.setHorizontalGroup(
         	gl_jPanel6.createParallelGroup(Alignment.LEADING)
@@ -321,9 +328,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         );
         jPanel6.setLayout(gl_jPanel6);
 
-        jSplitPane1.setRightComponent(jSplitPane3);
 
-        jSplitPane1.setLeftComponent(jPanel1);
         
         JButton btnDevMode = new JButton("Mode Dev");
         btnDevMode.addActionListener(new ActionListener() {
@@ -342,6 +347,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         textAreaOutput = new JTextArea();
         
         JLabel lblHelp = new JLabel("Aide");
+        
         GroupLayout gl_jPanel1 = new GroupLayout(jPanel1);
         gl_jPanel1.setHorizontalGroup(
         	gl_jPanel1.createParallelGroup(Alignment.LEADING)
@@ -448,7 +454,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 		/* Suppression des fichiers temporaires à la fermeture de l'application */
 		for (Tank t: MainWindow.getPanneauDessin().getPhysique().getTanks())
 		{
-			File file = new File("ressources/"+t.getIntel().getScript().getTmpFileName());
+			File file = new File("src/ressources/"+t.getIntel().getScript().getTmpFileName());
 			file.delete();
 		}
 		System.exit(0);
@@ -459,7 +465,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 		/* Suppression des fichiers temporaires à la fermeture de l'application */
 		for (Tank t: MainWindow.getPanneauDessin().getPhysique().getTanks())
 		{
-			File file = new File("ressources/"+t.getIntel().getScript().getTmpFileName());
+			File file = new File("src/ressources/"+t.getIntel().getScript().getTmpFileName());
 			file.delete();
 		}
 		System.exit(0);

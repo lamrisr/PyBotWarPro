@@ -24,9 +24,9 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	Physique physique;
 	ObjetTT contenu;
 	SpriteSet sp = new SpriteSet();
-	Sprite mur = new Sprite("ressources/wall1.png");
-	Sprite sol = new Sprite("ressources/sand.png");
-	Sprite projectile = new Sprite("ressources/shot.png");
+	Sprite mur = new Sprite("src/ressources/wall1.png");
+	Sprite sol = new Sprite("src/ressources/sand.png");
+	Sprite projectile = new Sprite("src/ressources/shot.png");
 	AffineTransformOp op;
 	
 	public PanneauDessin(Physique physique){

@@ -17,10 +17,10 @@ public class SpriteSet {
 
 
 	public BufferedImage getImg(int num,String tc) throws IOException {
-		img[0] = ImageIO.read(new File("ressources/TankH"+tc+".png"));
-	    img[1] = ImageIO.read(new File("ressources/TankB"+tc+".png"));
-	    img[2] = ImageIO.read(new File("ressources/TankG"+tc+".png"));
-	    img[3] = ImageIO.read(new File("ressources/TankD"+tc+".png"));
+		img[0] = ImageIO.read(new File("src/ressources/TankH"+tc+".png"));
+	    img[1] = ImageIO.read(new File("src/ressources/TankB"+tc+".png"));
+	    img[2] = ImageIO.read(new File("src/ressources/TankG"+tc+".png"));
+	    img[3] = ImageIO.read(new File("src/ressources/TankD"+tc+".png"));
 		return img[num];
 	}
 	

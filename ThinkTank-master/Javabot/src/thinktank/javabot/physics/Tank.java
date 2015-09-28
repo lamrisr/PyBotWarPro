@@ -58,7 +58,7 @@ public class Tank extends Mobile {
 		setArme(arme);
 		setMap(map);
 		setDirection(new Direction(0, 1));
-		ia = intels.newIntelligence("ressources/tank1.py",this);
+		ia = intels.newIntelligence("src/ressources/tank1.py",this);
 		ia.initialize();
 	}
 	
@@ -97,7 +97,7 @@ public class Tank extends Mobile {
 		setArme(arme);
 		setMap(map);
 		setDirection(new Direction(0, 1));
-		ia = intels.newIntelligence("ressources/tank1.py",this);
+		ia = intels.newIntelligence("src/ressources/tank1.py",this);
 		ia.initialize();
 		
 	}
