@@ -58,7 +58,6 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static boolean NextStepFlag=false;
 	public static JTextArea textAreaCode;
 	public static JTextArea textAreaOutput;
-	public static JTextArea textAreaHelp;
 	public static Highlighter currentLineExecution;
 	public static Writer outPut = new StringWriter();
 	public static GraphicInterface gui;
@@ -150,9 +149,9 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 
         // jPanel1: Panneau de gauche de débogage
         jPanel1 = new javax.swing.JPanel();
-        jPanel1.setPreferredSize(new Dimension(400, 0));
-        jPanel1.setMinimumSize(new Dimension(400, 0));
-        jPanel1.setMaximumSize(new Dimension(400, 0)); 
+        jPanel1.setPreferredSize(new Dimension(300, 0));
+        jPanel1.setMinimumSize(new Dimension(300, 0));
+        jPanel1.setMaximumSize(new Dimension(300, 0)); 
         
         // jPanel5: Panneau de jeu
         jPanel5 = new javax.swing.JPanel();
@@ -175,13 +174,12 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         
         // jSplitPane1: Panneau de gauche
         jSplitPane1 = new javax.swing.JSplitPane();
-        jSplitPane1.setRightComponent(jSplitPane3);
-        jSplitPane1.setLeftComponent(jPanel1);
         jSplitPane1.getLeftComponent().setMinimumSize(new Dimension());
     	//pane.setDividerLocation(0.0d);
         jSplitPane1.getRightComponent().setMinimumSize(new Dimension());
     	//pane.setDividerLocation(1.0d);
-
+        jSplitPane1.setRightComponent(jSplitPane3);
+        jSplitPane1.setLeftComponent(jPanel1);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
@@ -349,33 +347,16 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         });
         
         textAreaCode = new JTextArea();
-        textAreaCode.setLineWrap(true);
-        textAreaCode.setWrapStyleWord(true);
-       
-        //JList<ComponentPlacement> JList_1 = new JList<ComponentPlacement>();
+        
+        JList<ComponentPlacement> JList_1 = new JList<ComponentPlacement>();
         
         JLabel lblErrors = new JLabel("Sortie");
         lblErrors.setHorizontalAlignment(SwingConstants.LEFT);
         
         textAreaOutput = new JTextArea();
-        textAreaOutput.setLineWrap(true);
-        textAreaOutput.setWrapStyleWord(true);
         
         JLabel lblHelp = new JLabel("Aide");
-
-        textAreaHelp = new JTextArea(
-					        		"noAction()\n" + 
-					        		"moveForward()\n" + 
-					        		"moveBackward()\n" +
-					        		"turnClockwise()\n" +
-					        		"turnCounterClockwise()\n" +
-					        		"shoot()");
-        textAreaHelp.setEditable(false);
-
-        JScrollPane textAreaOutputScrollPane = new JScrollPane(textAreaOutput);
-        textAreaOutputScrollPane.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-     
+        
         GroupLayout gl_jPanel1 = new GroupLayout(jPanel1);
         gl_jPanel1.setHorizontalGroup(
         	gl_jPanel1.createParallelGroup(Alignment.LEADING)
@@ -387,11 +368,10 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         						.addGroup(gl_jPanel1.createSequentialGroup()
         							.addGroup(gl_jPanel1.createParallelGroup(Alignment.LEADING)
         								.addComponent(lblErrors)
-        								//.addComponent(textAreaOutput, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
-        								.addComponent(textAreaOutputScrollPane, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
+        								.addComponent(textAreaOutput, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
         							.addPreferredGap(ComponentPlacement.RELATED)
         							.addGroup(gl_jPanel1.createParallelGroup(Alignment.LEADING)
-        								.addComponent(textAreaHelp, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+        								.addComponent(JList_1, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         								.addComponent(lblHelp, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
         						.addComponent(btnDevMode)))
         				.addComponent(textAreaCode, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
@@ -409,9 +389,8 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         				.addComponent(lblErrors))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(gl_jPanel1.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(textAreaHelp, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(textAreaOutputScrollPane, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
-        				//.addComponent(textAreaOutput, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
+        				.addComponent(JList_1, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(textAreaOutput, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1.setLayout(gl_jPanel1);
 
