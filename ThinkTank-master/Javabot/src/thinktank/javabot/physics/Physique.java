@@ -1,5 +1,6 @@
 package thinktank.javabot.physics;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import thinktank.javabot.graphics.GraphicInterface;
@@ -334,6 +335,8 @@ public class Physique {
 					{
 						GraphicInterface.updateHighlight(t.getIntel().getScript().getCurrentLine());
 					}
+					
+				
 				
 					
 			
@@ -342,6 +345,24 @@ public class Physique {
 		
 		}
 	
+	}
+
+	public void destroyTank(Tank selectedTank) {
+		System.out.println(getTanks().size());
+	 for (int i = 0; i < getTanks().size(); i++)
+		{
+		 Tank t = getTanks().get(i);
+			if (t == selectedTank)
+			{
+				File file = new File("ressources/"+t.getIntel().getScript().getTmpFileName());
+				file.delete();
+				map.erase(t.getCoordX(), t.getCoordY());
+				getTanks().remove(t);
+				map.removeTank(t);
+				tour = 0;
+			}
+		}
+		
 	}
 	
 	

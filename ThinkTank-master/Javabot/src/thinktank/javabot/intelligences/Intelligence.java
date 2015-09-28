@@ -1,6 +1,7 @@
 package thinktank.javabot.intelligences;
 import org.python.util.PythonInterpreter;
 
+import thinktank.javabot.graphics.GraphicInterface;
 import thinktank.javabot.physics.Tank;
 
 // TODO: Auto-generated Javadoc
@@ -192,7 +193,7 @@ public class Intelligence extends Thread {
 	{
 		interp = new PythonInterpreter();
 		
-		interp.setOut(script.getJVBLayerOutput());
+		interp.setOut(GraphicInterface.outPut);
 		//interp.setOut(System.out);
 		interp.exec("import sys");
 		interp.exec("import inspect");

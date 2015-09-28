@@ -26,8 +26,6 @@ public class Script {
 	private int currentLine = 0;
 	private String tmpFileName;
 	private String  tmpFileContent = "";
-	private String output; /* Sortie telle qu'elle est affichée dans l'inferface graphique */
-	private Writer JVBLayerOutput = new StringWriter(); /*Redirection de la sortie standard, composée de la surcouche Javabot (numéros de lignes)*/
 	private Intelligence intelligence;
 	public Script(String filename, Intelligence intelligence)
 	{
@@ -43,11 +41,7 @@ public class Script {
 	/*	watchOutput = new WatchOutput(this);
 		watchOutput.start();*/
 	}
-	
-	public Writer getJVBLayerOutput()
-	{
-		return JVBLayerOutput;
-	}
+
 
 	
 	public String getInstructions()
@@ -55,11 +49,7 @@ public class Script {
 		return instructions;
 	}
 	
-	public String getOutput()
-	{
-		return output;
-	}
-	
+
 	public void setCurrentLine(int line)
 	{
 		currentLine = line;

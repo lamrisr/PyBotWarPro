@@ -28,18 +28,22 @@ import javax.swing.JTextArea;
 
 import thinktank.javabot.physics.Tank;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  *
  * @author Haroun
  */
 @SuppressWarnings("serial")
-public class GraphicInterface extends javax.swing.JFrame implements WindowListener {
+public class GraphicInterface extends javax.swing.JFrame implements WindowListener, KeyListener {
 
     /**
      * Creates new form MainGameWindow
@@ -54,9 +58,13 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static JTextArea textAreaCode;
 	public static JTextArea textAreaOutput;
 	public static Highlighter currentLineExecution;
+	public static Writer outPut = new StringWriter();
+	public static GraphicInterface gui;
     public GraphicInterface() {
         initComponents();
+        GraphicInterface.gui = this;
         this.addWindowListener(this);
+        this.addKeyListener(this);
     }
 
     /**
@@ -110,14 +118,14 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     
     public static void updateOutputArea()
     {
-    	if (selectedTank != null)
+    	/*if (selectedTank != null)
     	{
     		textAreaOutput.setText(selectedTank.getIntel().getScript().getJVBLayerOutput().toString());
     	}
     	else
-    	{
-    		textAreaOutput.setText("");
-    	}
+    	{*/
+    		textAreaOutput.setText(outPut.toString());
+    	//}
     }
     
     public static void updateHighlight(int line)
@@ -266,7 +274,8 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         			btnStart.setText("Pause");
         			textAreaCode.setEditable(false);
         		}
-        		
+        		 GraphicInterface.gui.setFocusable(true);
+     	       GraphicInterface.gui.requestFocusInWindow();
         	}
         });
         
@@ -394,6 +403,9 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         );
 
         pack();
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -426,7 +438,9 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GraphicInterface().setVisible(true);
+               gui =  new GraphicInterface();
+               gui.setVisible(true);
+                
                 
             }
         });
@@ -486,6 +500,34 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 
 	@Override
 	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		if (selectedTank != null && stoped == true)
+		{
+			if (arg0.getID() == 402) // Touch suppr relachée
+			{
+				MainWindow.getPanneauDessin().getPhysique().destroyTank(selectedTank);
+				setSelectedTank(null);
+				MainWindow.getPanneauDessin().repaint();
+			}
+		}
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
 		// TODO Auto-generated method stub
 		
 	}
