@@ -354,7 +354,7 @@ public class Physique {
 		 Tank t = getTanks().get(i);
 			if (t == selectedTank)
 			{
-				File file = new File("ressources/"+t.getIntel().getScript().getTmpFileName());
+				File file = new File("src/ressources/"+t.getIntel().getScript().getTmpFileName());
 				file.delete();
 				map.erase(t.getCoordX(), t.getCoordY());
 				getTanks().remove(t);
