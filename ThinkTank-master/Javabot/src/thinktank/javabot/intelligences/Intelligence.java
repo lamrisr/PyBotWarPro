@@ -205,7 +205,7 @@ public class Intelligence extends Thread {
 	
 	public void execInterpreter()
 	{
-		interp.execfile("ressources/"+script.getTmpFileName());
+		interp.execfile("src/ressources/"+script.getTmpFileName());
 		setAction(Action.scriptCompleted);
 	}
 	

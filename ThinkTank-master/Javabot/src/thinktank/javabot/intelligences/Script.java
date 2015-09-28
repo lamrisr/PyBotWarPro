@@ -104,7 +104,7 @@ public class Script {
 	private void writeTmpFile()
 	{
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("ressources/"+tmpFileName)));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("src/ressources/"+tmpFileName)));
 		
 			writer.write(tmpFileContent);
 			writer.close();
