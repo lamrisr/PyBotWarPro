@@ -52,6 +52,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static boolean stoped=true;
 	public static boolean NextStepFlag=false;
 	public static JTextArea textAreaCode;
+	public static JTextArea textAreaOutput;
 	public static Highlighter currentLineExecution;
     public GraphicInterface() {
         initComponents();
@@ -74,6 +75,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	checkCodeUpdates();
     	selectedTank = t;
     	updateCodeArea();
+    	updateOutputArea();
     }
     
     public static void checkCodeUpdates()
@@ -103,6 +105,18 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	else
     	{
     		textAreaCode.setText("");
+    	}
+    }
+    
+    public static void updateOutputArea()
+    {
+    	if (selectedTank != null)
+    	{
+    		textAreaOutput.setText(selectedTank.getIntel().getScript().getJVBLayerOutput().toString());
+    	}
+    	else
+    	{
+    		textAreaOutput.setText("");
     	}
     }
     
@@ -177,7 +191,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 		        }
 		        
 		        
-		        selectedTank = MainWindow.phy.addTank(xp, yp,"ressources/"+chooser.getSelectedFile().getName());
+		        setSelectedTank(MainWindow.phy.addTank(xp, yp,"ressources/"+chooser.getSelectedFile().getName()));
 			}
 			
 			@Override
@@ -235,21 +249,21 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         TankBVert.addMouseListener(ms);
         TankBViolet.addMouseListener(ms);
         
-        final JButton btnNextStep = new JButton("Next Step");
-        final JButton btnStart = new JButton("Start");
+        final JButton btnNextStep = new JButton("Etape suivante");
+        final JButton btnStart = new JButton("Démarrer");
         btnStart.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		stoped = !stoped;
         		btnNextStep.setVisible(!btnNextStep.isVisible());
         		if(stoped)
         		{
-        			btnStart.setText("Start");
+        			btnStart.setText("Reprendre");
         			textAreaCode.setEditable(true);
         		}
         		else
         		{
         			checkCodeUpdates();
-        			btnStart.setText("Stop");
+        			btnStart.setText("Pause");
         			textAreaCode.setEditable(false);
         		}
         		
@@ -311,7 +325,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 
         jSplitPane1.setLeftComponent(jPanel1);
         
-        JButton btnDevMode = new JButton("Developer Mode");
+        JButton btnDevMode = new JButton("Mode Dev");
         btnDevMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         		jSplitPane1.setDividerLocation(1.0d);
@@ -322,12 +336,12 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         
         JList<ComponentPlacement> JList_1 = new JList<ComponentPlacement>();
         
-        JLabel lblErrors = new JLabel("Errors");
+        JLabel lblErrors = new JLabel("Sortie");
         lblErrors.setHorizontalAlignment(SwingConstants.LEFT);
         
-        JTextArea textArea_2 = new JTextArea();
+        textAreaOutput = new JTextArea();
         
-        JLabel lblHelp = new JLabel("Help");
+        JLabel lblHelp = new JLabel("Aide");
         GroupLayout gl_jPanel1 = new GroupLayout(jPanel1);
         gl_jPanel1.setHorizontalGroup(
         	gl_jPanel1.createParallelGroup(Alignment.LEADING)
@@ -339,7 +353,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         						.addGroup(gl_jPanel1.createSequentialGroup()
         							.addGroup(gl_jPanel1.createParallelGroup(Alignment.LEADING)
         								.addComponent(lblErrors)
-        								.addComponent(textArea_2, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
+        								.addComponent(textAreaOutput, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
         							.addPreferredGap(ComponentPlacement.RELATED)
         							.addGroup(gl_jPanel1.createParallelGroup(Alignment.LEADING)
         								.addComponent(JList_1, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
@@ -361,7 +375,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(gl_jPanel1.createParallelGroup(Alignment.BASELINE)
         				.addComponent(JList_1, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(textArea_2, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
+        				.addComponent(textAreaOutput, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1.setLayout(gl_jPanel1);
 

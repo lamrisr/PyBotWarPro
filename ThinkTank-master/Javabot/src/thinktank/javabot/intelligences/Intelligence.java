@@ -197,7 +197,7 @@ public class Intelligence extends Thread {
 		interp.exec("import sys");
 		interp.exec("import inspect");
 		interp.exec("def lineno():\n\treturn inspect.currentframe().f_back.f_lineno");
-		interp.exec("print sys");
+		//interp.exec("print sys");
 		interp.set("tank", tankR);
 		tankR.bePrepared();
 	}

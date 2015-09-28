@@ -174,7 +174,7 @@ public class Physique {
 		/**
 	 	* lance la prochaine action de tout les éléments du Terrain
 	 	*/
-		
+		GraphicInterface.updateOutputArea();
 //		int i = 0;
 	/*	if (map.getProjectile() == null)
 		{
