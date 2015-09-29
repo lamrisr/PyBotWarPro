@@ -100,6 +100,10 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	{
     		updateListTanksOnMap();
     	}
+    	else
+    	{
+    		textAreaCode.setEditable(true);
+    	}
     	GraphicInterface.gui.setFocusable(true);
 	    GraphicInterface.gui.requestFocusInWindow();
     }
@@ -151,14 +155,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-      /*  textAreaCode.insertIcon(new ImageIcon("src/ressources/TankDRed.png"));
-
-        try {
-			textAreaCode.getStyledDocument().insertString(9, " Hello\n", null);
-		} catch (BadLocationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
+    
         i++;
     	}
     	
