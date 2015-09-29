@@ -450,7 +450,12 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         		jSplitPane1.setDividerLocation(1.0d);
         	}
         });
+
+        JButton btnImport = new JButton("Importer");
         
+        JButton btnExport = new JButton("Exporter");
+        
+
         textAreaCode = new JTextPane();
         updateListTanksOnMap();
         
@@ -491,6 +496,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         	gl_jPanel1.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_jPanel1.createSequentialGroup()
         			.addGroup(gl_jPanel1.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(textAreaCodeScrollPane, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
         				.addGroup(gl_jPanel1.createSequentialGroup()
         					.addContainerGap()
         					.addGroup(gl_jPanel1.createParallelGroup(Alignment.LEADING)
@@ -504,7 +510,10 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         								//.addComponent(JList_1, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
             							.addComponent(textAreaHelp, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         								.addComponent(lblHelp, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
-        						.addComponent(btnDevMode)))
+        						.addGroup(gl_jPanel1.createSequentialGroup()
+        						.addComponent(btnDevMode)
+        						.addComponent(btnImport)
+        						.addComponent(btnExport))))
         				//.addComponent(textAreaCode, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
     					.addComponent(textAreaCodeScrollPane, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
         			.addGap(3))
@@ -512,7 +521,10 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         gl_jPanel1.setVerticalGroup(
         	gl_jPanel1.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_jPanel1.createSequentialGroup()
-        			.addComponent(btnDevMode)
+        			.addGroup(gl_jPanel1.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(btnDevMode)
+        				.addComponent(btnImport)
+        				.addComponent(btnExport))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			//.addComponent(textAreaCode, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         			.addComponent(textAreaCodeScrollPane, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
