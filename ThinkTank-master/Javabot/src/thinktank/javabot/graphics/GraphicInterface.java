@@ -83,9 +83,9 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         GraphicInterface.gui = this;
         this.addWindowListener(this);
         this.addKeyListener(this);
+        setResizable(false);
       
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -191,7 +191,6 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	// sert a rien
         jLabel1 = new javax.swing.JLabel();
         jLabel1.setText("jLabel1");
-
         // jPanel1: Panneau de gauche de débogage
         jPanel1 = new javax.swing.JPanel();
         jPanel1.setPreferredSize(new Dimension(350, 0));
@@ -216,15 +215,17 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane3.setTopComponent(jPanel5);        
         jSplitPane3.setRightComponent(jPanel6);
-        
+
         // jSplitPane1: split Panneau de gauche
         jSplitPane1 = new javax.swing.JSplitPane();
         jSplitPane1.getLeftComponent().setMinimumSize(new Dimension());
     	//pane.setDividerLocation(0.0d);
         jSplitPane1.getRightComponent().setMinimumSize(new Dimension());
+
     	//pane.setDividerLocation(1.0d);
         jSplitPane1.setRightComponent(jSplitPane3);
         jSplitPane1.setLeftComponent(jPanel1);
+        jSplitPane1.setEnabled( false );
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
@@ -327,6 +328,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 				// TODO Auto-generated method stub
 				
 			}
+
         };
         
         
@@ -626,10 +628,10 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
                 .addContainerGap())
         );
 
-        pack();
+        this.pack();
         this.setFocusable(true);
         this.requestFocusInWindow();
-        
+      
     }// </editor-fold>//GEN-END:initComponents
 
     /**
