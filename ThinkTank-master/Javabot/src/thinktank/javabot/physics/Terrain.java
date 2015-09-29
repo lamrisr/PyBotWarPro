@@ -117,7 +117,7 @@ public class Terrain {
  	* @param y  ordonnée
  	*/
 	{
-		Tank t =new Tank(x,y,this,filepath,physique,GraphicInterface.TankChoice);
+		Tank t = new Tank(x,y,this,filepath,physique,GraphicInterface.TankChoice);
 		tanks.add(t);
 		addObjetTT(t.getCoordX(), t.getCoordY(), t);
 		return t;

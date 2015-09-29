@@ -39,7 +39,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -69,6 +72,9 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static JTextArea textAreaHelp;
 	public static Highlighter currentLineExecution;
 	public static Writer outPut = new StringWriter();
+	public static JButton btnExport;
+	public static JButton btnImport;
+
 	public static GraphicInterface gui;
     public GraphicInterface() {
     	
@@ -99,10 +105,14 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	if (selectedTank == null)
     	{
     		updateListTanksOnMap();
+    		btnImport.setVisible(false);
+    		btnExport.setVisible(false);
     	}
     	else
     	{
     		textAreaCode.setEditable(true);
+    		btnImport.setVisible(true);
+    		btnExport.setVisible(true);
     	}
     	GraphicInterface.gui.setFocusable(true);
 	    GraphicInterface.gui.requestFocusInWindow();
@@ -267,18 +277,19 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 						
 
 					
-					int returnVal = chooser.showOpenDialog(null);
+					/*int returnVal = chooser.showOpenDialog(null);
 				
 			        if(returnVal == JFileChooser.APPROVE_OPTION) {
 			           System.out.println("You chose to open this file: " +
-			               chooser.getSelectedFile().getName());
-				        setSelectedTank(MainWindow.phy.addTank(x_absolute_position/MainWindow.getPanneauDessin().getTailleCase(), y_absolute_position/MainWindow.getPanneauDessin().getTailleCase(),"src/ressources/"+GraphicInterface.chooser.getSelectedFile().getName()));
+			               chooser.getSelectedFile().getName());*/
+						String filePath  = null;
+				        setSelectedTank(MainWindow.phy.addTank(x_absolute_position/MainWindow.getPanneauDessin().getTailleCase(), y_absolute_position/MainWindow.getPanneauDessin().getTailleCase(), filePath));
 
 			       
 			        }
 			        
 			        
-					}
+			//		}
 				}
 				
 				TankChoice = "";
@@ -451,10 +462,65 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         	}
         });
 
-        JButton btnImport = new JButton("Importer");
+        btnImport = new JButton("Importer");
         
-        JButton btnExport = new JButton("Exporter");
         
+        btnImport.addActionListener(new ActionListener()
+        {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				int returnVal = chooser.showOpenDialog(null);
+				
+		        if(returnVal == JFileChooser.APPROVE_OPTION) {
+		           System.out.println("You chose to open this file: " +
+		               chooser.getSelectedFile().getName());
+		           
+		           String filePath = GraphicInterface.chooser.getSelectedFile().getAbsolutePath();
+	
+		           selectedTank.getIntel().getScript().setFileName(filePath);
+		        }
+				
+			}
+        	
+        });
+        
+        
+         btnExport = new JButton("Exporter");
+        
+        btnExport.addActionListener(new ActionListener()
+        {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				checkCodeUpdates();
+				int returnVal = chooser.showOpenDialog(null);
+				
+		        if(returnVal == JFileChooser.APPROVE_OPTION) {
+		           System.out.println("You chose to write this file: " +
+		               chooser.getSelectedFile().getName());
+		           
+		           String filePath = GraphicInterface.chooser.getSelectedFile().getAbsolutePath();
+		           try {
+		   			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filePath)));
+		   		
+		   			writer.write(selectedTank.getIntel().getScript().getInstructions());
+		   			writer.close();
+		   		} catch (IOException e1) {
+		   			// TODO Auto-generated catch block
+		   			e1.printStackTrace();
+		   		}
+		           
+		        }
+				
+			}
+        	
+        });
+        
+        btnImport.setVisible(false);
+        btnExport.setVisible(false);
 
         textAreaCode = new JTextPane();
         updateListTanksOnMap();

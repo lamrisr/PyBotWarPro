@@ -38,11 +38,18 @@ public class Script {
 		//System.out.println("Content:  "+tmpFileContent);
 		writeTmpFile();
 		
-	/*	watchOutput = new WatchOutput(this);
-		watchOutput.start();*/
+	
 	}
 
 
+	public void setFileName(String filename)
+	{
+		this.filename = filename;
+		instructions = "";
+		importInstructionsFromFile(this.filename);
+		writeTmpFile();
+		updateInstructions(instructions);
+	}
 	
 	public String getInstructions()
 	{
@@ -132,23 +139,25 @@ public class Script {
 	
 	public void updateInstructions(String newInstructions)
 	{
-		System.out.println("NEW INSTRUCTIONS: "+newInstructions);
+		
 		instructions = newInstructions;
 		tmpFileContent= addLayer(instructions);
 		writeTmpFile();
 		Tank tmp = intelligence.getTankR().tankPhy;
-		System.out.println("aie");
 		intelligence = new Intelligence(filename, intelligence.getIntels(), tmp, this);
-		System.out.println("aie2");
 		tmp.setIntelligence(intelligence);
-		System.out.println("OK");
-		//intelligence.initInterpreter();
-		//intelligence.execInterpreter();
+	
 	}
 	
 	private void importInstructionsFromFile(String path)
 	{
-		
+		if (path == null)
+		{
+			instructions = "print \"Hello World !\"";
+			tmpFileContent = addLayer(instructions);
+			GraphicInterface.textAreaCode.setText(instructions);
+			return ;
+		}
 		BufferedReader br = null;
 		try {
 
