@@ -162,7 +162,15 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     		textAreaCode.insertIcon(new ImageIcon("src/ressources/TankD"+t.tc+".png"));
         try {
         	String textTank = " Tank"+i+"\n";
-			textAreaCode.getStyledDocument().insertString(position + (i - 1) * textTank.length() + (i-1), textTank, null);
+
+        	
+    			textAreaCode.getStyledDocument().insertString(position, textTank, null);
+    			System.out.println(position);
+
+    			position += (textTank.length() + 1);
+
+        		
+
 		} catch (BadLocationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
