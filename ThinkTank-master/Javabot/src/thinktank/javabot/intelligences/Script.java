@@ -77,9 +77,16 @@ public class Script {
 	{
 		int i = 0;
 		String[] lines = instructions.split("\n");
-		for (int j = 0; j < line - 1; j++)
+		try
 		{
-			i += lines[j].length() + 1;
+			for (int j = 0; j < line - 1; j++)
+			{
+				i += lines[j].length() + 1;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			return 0;
 		}
 		
 		return i;
@@ -89,9 +96,16 @@ public class Script {
 	{
 		int i = 0;
 		String[] lines = instructions.split("\n");
-		for (int j = 0; j < line ; j++)
+		try
 		{
-			i += lines[j].length() + 1;
+			for (int j = 0; j < line ; j++)
+			{
+				i += lines[j].length() + 1;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			return 0;
 		}
 		
 		return i;

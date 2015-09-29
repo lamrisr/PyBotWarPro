@@ -89,6 +89,7 @@ public class Intelligence extends Thread {
 		return action;
 	}
 	
+	
 	public Script getScript()
 	{
 		return script;

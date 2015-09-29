@@ -127,6 +127,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	{
     		if (!textAreaCode.getText().equals(selectedTank.getIntel().getScript().getInstructions()))
     		{
+    			System.out.println("maj");
     			selectedTank.getIntel().getScript().updateInstructions(textAreaCode.getText());
     		}
     		
@@ -276,13 +277,6 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 						int x_absolute_position = e.getXOnScreen() - x_origin_windowGame;
 						int y_absolute_position = e.getYOnScreen() - y_origin_windowGame;
 						
-
-					
-					/*int returnVal = chooser.showOpenDialog(null);
-				
-			        if(returnVal == JFileChooser.APPROVE_OPTION) {
-			           System.out.println("You chose to open this file: " +
-			               chooser.getSelectedFile().getName());*/
 						String filePath  = null;
 				        setSelectedTank(MainWindow.phy.addTank(x_absolute_position/MainWindow.getPanneauDessin().getTailleCase(), y_absolute_position/MainWindow.getPanneauDessin().getTailleCase(), filePath));
 
@@ -301,6 +295,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
+				setSelectedTank(null);
 				if (stoped == 0)
 					return;
 				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
