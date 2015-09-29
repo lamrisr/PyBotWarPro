@@ -57,7 +57,11 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static int yp=0;
 	public static JFileChooser chooser = new JFileChooser();
 	private static Tank selectedTank;
-	public static boolean stoped=true;
+	/* Plusieurs valeurs possibles pour stoped:
+	 * 0: Le jeu est en exécution
+	 * 1: Le jeu est arrêté
+	 * 2: L'arrêt est en cours et sera effectif à la fin des itérations de fluidité*/
+	public static int stoped=1;
 	public static boolean NextStepFlag=false;
 	public static JTextArea textAreaCode;
 	public static JTextArea textAreaOutput;
@@ -91,6 +95,8 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	selectedTank = t;
     	updateCodeArea();
     	updateOutputArea();
+    	GraphicInterface.gui.setFocusable(true);
+	    GraphicInterface.gui.requestFocusInWindow();
     }
     
     public static void checkCodeUpdates()
@@ -125,14 +131,8 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     
     public static void updateOutputArea()
     {
-    	/*if (selectedTank != null)
-    	{
-    		textAreaOutput.setText(selectedTank.getIntel().getScript().getJVBLayerOutput().toString());
-    	}
-    	else
-    	{*/
+    	
     		textAreaOutput.setText(outPut.toString());
-    	//}
     }
     
     public static void updateHighlight(int line)
@@ -262,6 +262,8 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
+				if (stoped == 0)
+					return;
 				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
 				int x_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getX();
 				int y_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getY();
@@ -339,9 +341,15 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         final JButton btnStart = new JButton("Démarrer");
         btnStart.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		stoped = !stoped;
+        		if (stoped == 1)
+        			stoped = 0; // Demarrage / Redémarrage
+        		else if (stoped == 2)
+        			return;
+        		else
+        			stoped = 2;
+        		
         		btnNextStep.setVisible(!btnNextStep.isVisible());
-        		if(stoped)
+        		if(stoped == 1 || stoped == 2)
         		{
         			btnStart.setText("Reprendre");
         			textAreaCode.setEditable(true);
@@ -615,7 +623,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		if (selectedTank != null && stoped == true)
+		if (selectedTank != null && stoped == 1)
 		{
 			if (arg0.getID() == 402) // Touch suppr relachée
 			{

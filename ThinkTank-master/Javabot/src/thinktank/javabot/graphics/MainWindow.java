@@ -128,10 +128,10 @@ public class MainWindow extends JFrame{
 		
 		while(true){
 			
-			if(!GraphicInterface.stoped || GraphicInterface.NextStepFlag){
+			if(GraphicInterface.stoped != 1 || GraphicInterface.NextStepFlag){
 				MainWindow.phy.iter();
-				if(GraphicInterface.NextStepFlag)
-					GraphicInterface.NextStepFlag=false;
+				/*if(GraphicInterface.NextStepFlag)
+					GraphicInterface.NextStepFlag=false;*/
 			}
 			MainWindow.game.repaint();
 			try {

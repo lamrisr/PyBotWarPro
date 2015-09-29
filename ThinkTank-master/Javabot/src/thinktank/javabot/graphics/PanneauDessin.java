@@ -182,15 +182,6 @@ public class PanneauDessin extends JPanel implements MouseListener {
 					int dx = ((Tank)contenu).getDirection().getDx();
 					int ni = 0;
 					
-				/*	if(dx < 0)
-						ni = 2;
-					if(dx > 0)
-						ni = 3;
-					if(dy < 0)
-						ni = 0;
-					if(dy > 0)
-						ni = 1;
-						*/
 					
 					if (dy > 0)
 						ni = 1;

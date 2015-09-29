@@ -176,97 +176,7 @@ public class Physique {
 	 	* lance la prochaine action de tout les éléments du Terrain
 	 	*/
 		GraphicInterface.updateOutputArea();
-//		int i = 0;
-	/*	if (map.getProjectile() == null)
-		{
-			int k = getTanks().size();
-			
-				for (int l = 0; l < k; l++ )
-				{
-					Tank t = getTanks().get(l);
-				System.out.println("TANK!");
-				
-			
-					t.lancerIA();
-					t.reduireTempsRestant();
-				}
-		}*/
-		/*
-		
-		for (Projectile p: map.getProjectiles())
-		{
-			p.avancer();
-			if (!p.getMort())
-				continue;
-		}
-		
-	
 
-		ArrayList<Projectile> ps = map.getProjectiles();
-		if(ps.size() > 0){
-			Projectile p = ps.get(i);
-			while(p != null && i < ps.size()){
-				p.avancer();
-				if(i < ps.size()){
-					if( !p.getMort()){
-						i++;
-						if(i < ps.size())
-							p = ps.get(i);
-					}
-					else // si il est mort
-
-
-						if(Projectile.getIdMort() == -1)
-							p=ps.get(i);
-						else{
-							if(p.getId() > Projectile.getIdMort()){
-								i = i--;
-								if(i < ps.size())
-									p = ps.get(i);
-							}
-							else{
-								if(i < ps.size())
-									p = ps.get(i);
-							}
-							Projectile.initIdMort();
-						}
-				}
-			}
-		}
-
-		*/
-
-		//Tank.getIntels().waitForAllActions();
-		
-		
-		
-
-		/*
-		i = 0;
-		ArrayList<Tank> ts = getTanks();
-		System.out.println("size: "+ts.size());
-		if(ts.size() > 0){
-			
-			Tank t = ts.get(i);
-			while(t != null && i < ts.size()){
-				t.getAction();
-				if (i < ts.size()){
-					if( !t.getMort()){
-						i++;
-						
-						///if(i< ts.size())
-						//{
-							//t = ts.get(i);
-					//	}
-
-					}
-				else
-					t = ts.get(i);
-				}
-			}
-		}
-
-		*/
 		Tank t;
 		int mobId;
 		if (map.getProjectile() != null)
@@ -310,14 +220,12 @@ public class Physique {
 				if (iterFluidite(t))
 					return;
 				
+				
 				t.setDeplacementStatus(null);
-				//t.initAvancement();
 				tour = (tour + 1) % getTanks().size();
 				System.out.println("Tour numero "+tour);
 					
 					t = getTanks().get(tour);
-					//t.getIntel().getScript().convertJVBLayerOutPutToOutPut();
-					
 					t.lancerIA();
 					
 					t.reduireTempsRestant();
@@ -329,6 +237,11 @@ public class Physique {
 						e.printStackTrace();
 					}
 					
+					if (GraphicInterface.stoped == 2)
+					{
+						GraphicInterface.stoped = 1;
+						
+					}
 					
 					t.getAction();
 					if (GraphicInterface.getSelectedTank() == t)
@@ -337,7 +250,8 @@ public class Physique {
 					}
 					
 				
-				
+					GraphicInterface.NextStepFlag = false;
+					
 					
 			
 			}
