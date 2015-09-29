@@ -68,7 +68,13 @@ public class MainWindow extends JFrame{
 		this.setVisible(true); 
 		
 		game.repaint();
-		GraphicInterface NewGame=new GraphicInterface();
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		GraphicInterface NewGame = new GraphicInterface();
 		
 		
 		NewGame.jPanel5.add(container);

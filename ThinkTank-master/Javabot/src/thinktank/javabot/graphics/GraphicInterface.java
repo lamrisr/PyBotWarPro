@@ -66,6 +66,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static Writer outPut = new StringWriter();
 	public static GraphicInterface gui;
     public GraphicInterface() {
+    	
         initComponents();
         GraphicInterface.gui = this;
         this.addWindowListener(this);
@@ -315,6 +316,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         TankBViolet.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBViolet.png")));
         
         // Association de la gestion du drag & drop
+       
         TankBBrun.addMouseListener(ms);
         TankBCyan.addMouseListener(ms);
         TankBJaune.addMouseListener(ms);
@@ -330,6 +332,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         TankBRose.addMouseMotionListener(mms);
         TankBVert.addMouseMotionListener(mms);
         TankBViolet.addMouseMotionListener(mms);
+       
         
         // Definition des boutons du menu (start et stop)
         final JButton btnNextStep = new JButton("Etape suivante");
@@ -428,6 +431,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         textAreaOutput = new JTextArea();
         textAreaOutput.setLineWrap(true);
         textAreaOutput.setWrapStyleWord(true);
+        textAreaOutput.setEditable(false);
         
         JScrollPane textAreaOutputScrollPane = new JScrollPane(textAreaOutput);
         textAreaOutputScrollPane.setVerticalScrollBarPolicy(
