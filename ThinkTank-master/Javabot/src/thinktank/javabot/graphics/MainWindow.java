@@ -64,9 +64,8 @@ public class MainWindow extends JFrame{
 		
 		
 		this.setContentPane(container);
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setVisible(true); 
-		
 		game.repaint();
 		
 		try {
@@ -79,7 +78,7 @@ public class MainWindow extends JFrame{
 		
 		NewGame.jPanel5.add(container);
 		
-		
+		//NewGame.setResizable(false);
 		
 		
 		//NewGame.jPanel5.add(c2);
