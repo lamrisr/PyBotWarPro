@@ -2,6 +2,7 @@ package thinktank.javabot.physics;
 
 import java.util.Random;
 
+import thinktank.javabot.graphics.GraphicInterface;
 import thinktank.javabot.intelligences.Action;
 import thinktank.javabot.intelligences.Intelligence;
 import thinktank.javabot.intelligences.Intelligences;
@@ -193,9 +194,13 @@ public class Tank extends Mobile {
 	}
 
 	protected void tuer() {
+		
 		getMap().erase(getCoordX(), getCoordY());
 		meurt();
+		if (GraphicInterface.getSelectedTank() == this)
+			GraphicInterface.setSelectedTank(null);
 		getMap().removeTank(this);
+		
 	}
 
 	protected void action(Action act) 
@@ -272,28 +277,6 @@ public class Tank extends Mobile {
 			setLatence(getLatence() - 1);
 			return;
 		}
-//		switch (i%3) { test sans ia
-//		case 0:
-//			action(Physique.action.tournerGauche);
-//			break;
-//		case 1:
-//			action(Physique.action.tirer);
-//			break;
-//		case 2:
-//			action(Physique.action.avancer);
-//			break;
-//
-//		default:
-//			break;
-//		}
-//		i++;
-		
-//		ia.computeAction();
-//		try {
-//			Thread.sleep(100);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 		
 		if(ia.getAction() != null){
 			act = ia.getAction();

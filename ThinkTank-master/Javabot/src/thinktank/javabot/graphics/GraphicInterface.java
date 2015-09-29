@@ -16,6 +16,7 @@ import javax.swing.text.Highlighter;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout;
 import javax.swing.JComponent;
+import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -63,7 +64,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	 * 2: L'arrêt est en cours et sera effectif à la fin des itérations de fluidité*/
 	public static int stoped=1;
 	public static boolean NextStepFlag=false;
-	public static JTextArea textAreaCode;
+	public static JTextPane textAreaCode;
 	public static JTextArea textAreaOutput;
 	public static JTextArea textAreaHelp;
 	public static Highlighter currentLineExecution;
@@ -95,6 +96,10 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	selectedTank = t;
     	updateCodeArea();
     	updateOutputArea();
+    	if (selectedTank == null)
+    	{
+    		updateListTanksOnMap();
+    	}
     	GraphicInterface.gui.setFocusable(true);
 	    GraphicInterface.gui.requestFocusInWindow();
     }
@@ -105,16 +110,11 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	 *  Y-a-t-il eu des modifications sur le script Python ?*/
     	if (selectedTank != null)
     	{
-    		System.out.println("tt"+textAreaCode.getText());
     		if (!textAreaCode.getText().equals(selectedTank.getIntel().getScript().getInstructions()))
     		{
-    			System.out.println("aa");
     			selectedTank.getIntel().getScript().updateInstructions(textAreaCode.getText());
     		}
-    		else
-    		{
-    			System.out.println("nej");
-    		}
+    		
     	}
     }
     public static void updateCodeArea()
@@ -125,7 +125,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     	}
     	else
     	{
-    		textAreaCode.setText("");
+    		updateListTanksOnMap();
     	}
     }
     
@@ -133,6 +133,36 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     {
     	
     		textAreaOutput.setText(outPut.toString());
+    }
+    
+    public static void updateListTanksOnMap()
+    {
+    	String initText = "Liste des tanks :\n";
+    	textAreaCode.setText(initText);
+    	int i = 1;
+    	int position = initText.length() + 1;
+    	for (Tank t: MainWindow.getPanneauDessin().getPhysique().getTanks())
+    	{
+    		textAreaCode.insertIcon(new ImageIcon("src/ressources/TankD"+t.tc+".png"));
+        try {
+        	String textTank = " Tank"+i+"\n";
+			textAreaCode.getStyledDocument().insertString(position + (i - 1) * textTank.length() + (i-1), textTank, null);
+		} catch (BadLocationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+      /*  textAreaCode.insertIcon(new ImageIcon("src/ressources/TankDRed.png"));
+
+        try {
+			textAreaCode.getStyledDocument().insertString(9, " Hello\n", null);
+		} catch (BadLocationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+        i++;
+    	}
+    	
+    	textAreaCode.setEditable(false);
     }
     
     public static void updateHighlight(int line)
@@ -424,7 +454,11 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         	}
         });
         
-        textAreaCode = new JTextArea();
+        textAreaCode = new JTextPane();
+        updateListTanksOnMap();
+        
+        
+   
         JScrollPane textAreaCodeScrollPane = new JScrollPane(textAreaCode);
         textAreaCodeScrollPane.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
