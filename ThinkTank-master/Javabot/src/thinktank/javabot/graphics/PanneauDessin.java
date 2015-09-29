@@ -3,12 +3,15 @@ package thinktank.javabot.graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 import thinktank.javabot.intelligences.Action;
@@ -27,12 +30,19 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	Sprite mur = new Sprite("src/ressources/wall1.png");
 	Sprite sol = new Sprite("src/ressources/sand.png");
 	Sprite projectile = new Sprite("src/ressources/shot.png");
+	Point lastRegisteredMousePosition = new Point();
 	AffineTransformOp op;
 	
 	public PanneauDessin(Physique physique){
 		super();
 		this.physique =  physique;
 		this.addMouseListener(this);
+		
+	}
+	
+	public int getTailleCase()
+	{
+		return tailleCase;
 	}
 	
 	private void paintLifeStick(Graphics g, int x, int y, int vie)
@@ -48,6 +58,7 @@ public class PanneauDessin extends JPanel implements MouseListener {
 		g.setColor(Color.blue);
 		g.drawRect(x - 15, y - 15, 50, 50);
 	}
+	
 	
 	private AffineTransformOp computeRotation(Image image, Action action, int avancement)
 	{
@@ -221,6 +232,16 @@ public class PanneauDessin extends JPanel implements MouseListener {
 					g.drawImage(projectile.getImg() ,x,y,tailleCase,tailleCase,null);
 				}		
 			}
+			
+			if (GraphicInterface.TankChoice != "")
+			{
+				try {
+					g.drawImage(sp.getImg(1,GraphicInterface.TankChoice), (int)(lastRegisteredMousePosition.getX())/tailleCase * tailleCase,(int)(lastRegisteredMousePosition.getY())/tailleCase * tailleCase,  null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		
@@ -277,13 +298,15 @@ public class PanneauDessin extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseReleased(MouseEvent e) {
+		
 		
 	}
 	public Physique getPhysique()
 	{
 		return physique;
 	}
+
+
 
 }

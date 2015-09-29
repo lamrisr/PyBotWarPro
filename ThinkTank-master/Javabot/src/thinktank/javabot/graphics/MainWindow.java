@@ -1,6 +1,8 @@
 package thinktank.javabot.graphics;
 
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.BoxLayout;
 
@@ -23,16 +25,21 @@ public class MainWindow extends JFrame{
 //	private static int setX;
 //	private static int setY;
 	
-	private JPanel container = new JPanel();
+	private static JPanel container;/* = new JPanel();*/
 //	private JPanel c2 = new JPanel();
 	
 	public static Physique phy;
 	
 	
+	public static JPanel getContainer()
+	{
+		return container;
+	}
+	
 	/**
 	 * Affichage principal de l'application
 	 **/
-	
+
 	public MainWindow() {
 		
 		int lx = 30;
@@ -45,7 +52,7 @@ public class MainWindow extends JFrame{
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-	
+		container = new JPanel();
         
 
 		container.setLayout(new BoxLayout(container,BoxLayout.PAGE_AXIS));
@@ -135,6 +142,8 @@ public class MainWindow extends JFrame{
 	{
 		return game;
 	}
+
+
 
 
 

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package thinktank.javabot.graphics;
+import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout.Alignment;
@@ -14,6 +15,7 @@ import javax.swing.text.Highlighter;
 
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout;
+import javax.swing.JComponent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -33,6 +35,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -52,7 +55,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static String TankChoice="";
 	public static int xp=0;
 	public static int yp=0;
-	private static JFileChooser chooser = new JFileChooser();
+	public static JFileChooser chooser = new JFileChooser();
 	private static Tank selectedTank;
 	public static boolean stoped=true;
 	public static boolean NextStepFlag=false;
@@ -66,6 +69,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         GraphicInterface.gui = this;
         this.addWindowListener(this);
         this.addKeyListener(this);
+      
     }
 
     /**
@@ -184,34 +188,88 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
         final JLabel TankBBrun = new JLabel("");
+        MouseMotionListener mms = new MouseMotionListener()
+        {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getX();
+				int y_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getY();
+				int x_end_windowGame = x_origin_windowGame + MainWindow.getContainer().getWidth();
+				int y_end_windowGame = y_origin_windowGame + MainWindow.getContainer().getHeight();
+				
+				
+					int x_absolute_position = e.getXOnScreen() - x_origin_windowGame;
+					int y_absolute_position = e.getYOnScreen() - y_origin_windowGame;
+					MainWindow.getPanneauDessin().lastRegisteredMousePosition.x = x_absolute_position;
+					MainWindow.getPanneauDessin().lastRegisteredMousePosition.y = y_absolute_position;
+				
+
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				
+				
+			}
+        	
+        };
+        
         MouseListener ms=new MouseListener(){
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				//e.getComponent().getLocationOnScreen().getY()
+				
+				
+				int x_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getX();
+				int y_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getY();
+				int x_end_windowGame = x_origin_windowGame + MainWindow.getContainer().getWidth();
+				int y_end_windowGame = y_origin_windowGame + MainWindow.getContainer().getHeight();
+				
 
-				System.out.println("Position selectionn�e: "+(e.getX())/28+","+((e.getY()+536)/20));
-				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
-				System.out.println("Selectionner :"+TankChoice);
-				xp=((e.getX())/28);
-				yp=((e.getY()+536)/20);
-				int returnVal = chooser.showOpenDialog(null);
+				
+				if (TankChoice != "")
+				{
+					if (e.getXOnScreen() >= x_origin_windowGame && e.getXOnScreen() <= x_end_windowGame && e.getYOnScreen() >= y_origin_windowGame && e.getYOnScreen() <= y_end_windowGame )
+					{
+						int x_absolute_position = e.getXOnScreen() - x_origin_windowGame;
+						int y_absolute_position = e.getYOnScreen() - y_origin_windowGame;
+						
 
-		        if(returnVal == JFileChooser.APPROVE_OPTION) {
-		           System.out.println("You chose to open this file: " +
-		                chooser.getSelectedFile().getName());
-		       
-		        }
-		        
-		        
-		        setSelectedTank(MainWindow.phy.addTank(xp, yp,"src/ressources/"+chooser.getSelectedFile().getName()));
+					
+					int returnVal = chooser.showOpenDialog(null);
+				
+			        if(returnVal == JFileChooser.APPROVE_OPTION) {
+			           System.out.println("You chose to open this file: " +
+			               chooser.getSelectedFile().getName());
+				        setSelectedTank(MainWindow.phy.addTank(x_absolute_position/MainWindow.getPanneauDessin().getTailleCase(), y_absolute_position/MainWindow.getPanneauDessin().getTailleCase(),"src/ressources/"+GraphicInterface.chooser.getSelectedFile().getName()));
+
+			       
+			        }
+			        
+			        
+					}
+				}
+				
+				TankChoice = "";
+				
+			
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
+				int x_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getX();
+				int y_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getY();
+				int x_end_windowGame = x_origin_windowGame + MainWindow.getContainer().getWidth();
+				int y_end_windowGame = y_origin_windowGame + MainWindow.getContainer().getHeight();
+				int x_absolute_position = e.getXOnScreen() - x_origin_windowGame;
+				int y_absolute_position = e.getYOnScreen() - y_origin_windowGame;
+				MainWindow.getPanneauDessin().lastRegisteredMousePosition.x = x_absolute_position;
+				MainWindow.getPanneauDessin().lastRegisteredMousePosition.y = y_absolute_position;
+			
 			}
 			
 			@Override
@@ -263,6 +321,14 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         TankBRose.addMouseListener(ms);
         TankBVert.addMouseListener(ms);
         TankBViolet.addMouseListener(ms);
+        
+        TankBBrun.addMouseMotionListener(mms);
+        TankBCyan.addMouseMotionListener(mms);
+        TankBJaune.addMouseMotionListener(mms);
+        TankBRed.addMouseMotionListener(mms);
+        TankBRose.addMouseMotionListener(mms);
+        TankBVert.addMouseMotionListener(mms);
+        TankBViolet.addMouseMotionListener(mms);
         
         // Definition des boutons du menu (start et stop)
         final JButton btnNextStep = new JButton("Etape suivante");
@@ -537,4 +603,6 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }
