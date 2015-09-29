@@ -76,6 +76,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	public static JButton btnImport;
 
 	public static GraphicInterface gui;
+	public static boolean devModeActivated = false;
     public GraphicInterface() {
     	
         initComponents();
@@ -215,7 +216,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         jSplitPane3.setTopComponent(jPanel5);        
         jSplitPane3.setRightComponent(jPanel6);
         
-        // jSplitPane1: Panneau de gauche
+        // jSplitPane1: split Panneau de gauche
         jSplitPane1 = new javax.swing.JSplitPane();
         jSplitPane1.getLeftComponent().setMinimumSize(new Dimension());
     	//pane.setDividerLocation(0.0d);
@@ -455,10 +456,19 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 
 
         
-        JButton btnDevMode = new JButton("Mode Dev");
+        final JButton btnDevMode = new JButton("Mode Dev");
         btnDevMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-        		jSplitPane1.setDividerLocation(1.0d);
+				if (GraphicInterface.devModeActivated == false) {
+	        		jSplitPane1.setDividerLocation(1.0d);
+	        		GraphicInterface.devModeActivated = true;
+	        		btnDevMode.setText("Mode Jeu");
+				}
+				else {
+	        		jSplitPane1.setDividerLocation(351);
+	        		GraphicInterface.devModeActivated = false;
+	        		btnDevMode.setText("Mode Dev");
+				}
         	}
         });
 
