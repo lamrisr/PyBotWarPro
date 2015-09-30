@@ -154,6 +154,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     public static void updateListTanksOnMap()
     {
     	String initText = "Liste des tanks :\n\n";
+    	textAreaCode.getHighlighter().removeAllHighlights();
     	textAreaCode.setText(initText);
 
     	

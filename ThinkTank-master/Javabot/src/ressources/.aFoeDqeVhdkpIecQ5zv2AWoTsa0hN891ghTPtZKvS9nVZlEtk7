@@ -1,0 +1,4 @@
+while true:
+	tank.moveForward(lineno())
+	tank.moveForward(lineno())
+	tank.turnClockWise()
