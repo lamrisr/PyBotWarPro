@@ -26,7 +26,14 @@ public class Script {
 	private int currentLine = 0;
 	private String tmpFileName;
 	private String  tmpFileContent = "";
+	/**
+     * @see Intelligence
+     */
 	private Intelligence intelligence;
+	/**
+     * Contient les instructions du fichier Python
+     * @param filename, intelligence
+     */
 	public Script(String filename, Intelligence intelligence)
 	{
 		
@@ -43,6 +50,10 @@ public class Script {
 
 
 	public void setFileName(String filename)
+	/**
+     * Attribue le chemin du fichier de script sélectionné
+     * @param filename
+     */
 	{
 		this.filename = filename;
 		instructions = "";
@@ -52,28 +63,49 @@ public class Script {
 	}
 	
 	public String getInstructions()
+	/**
+     * Récupère les instructions du fichier de script
+     * @return instructions
+     */
 	{
 		return instructions;
 	}
 	
 
 	public void setCurrentLine(int line)
+	/**
+     * Attribue la ligne en cours
+     * @param line
+     */
 	{
 		currentLine = line;
 	}
 	
 	public int getCurrentLine()
+	/**
+     * Retourne la ligne en cours
+     * @return currentLine
+     */
 	{
 		return currentLine;
 	}
 	
 	public String getTmpFileName()
+	/**
+     * Retourne le nom du fichier temporaire du script
+     * @return tmpFileName
+     */
 	{
 		return tmpFileName;
 	}
 	
-	/* Retourne la position du premier caractère de la ligne à mettre en surbrillance*/
 	public int startPositionLine(int line)
+	
+	/**
+	 * Retourne la position du premier caractère de la ligne à mettre en surbrillance
+     * @param line
+     * @return line number, 
+     */	
 	{
 		int i = 0;
 		String[] lines = instructions.split("\n");
@@ -93,6 +125,12 @@ public class Script {
 	}
 	
 	public int endPositionLine(int line)
+	
+	/**
+     * Retourne la position du dernier caractère de la ligne à mettre en surbrillance
+     * @param line
+     * @return line number
+     */	
 	{
 		int i = 0;
 		String[] lines = instructions.split("\n");
@@ -111,8 +149,11 @@ public class Script {
 		return i;
 	}
 	
-	/* Génère un nom aléatoire pour le fichier .py temporaire */
+
 	private void generateTmpFileName()
+	/**
+	 * Génère un nom aléatoire pour le fichier .py temporaire
+     */
 	{
 		String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		tmpFileName = "."; /* Fichier caché sur les sytèmes UNIX */
@@ -123,6 +164,9 @@ public class Script {
 	}
 	/* Ecrit dans le fichier temporaire */
 	private void writeTmpFile()
+	/** 
+	 * Ecrit dans le fichier temporaire 
+	 */
 	{
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("src/ressources/"+tmpFileName)));
@@ -137,6 +181,11 @@ public class Script {
 	}
 	
 	private String addLayer(String instr)
+	/**
+     * Retourne la string contenant le script python avec la surcouche
+     * @param instr
+     * @return tmpFileContentLayer
+     */	
 	{
 		String tmpFileContentLayer = instr;
 		tmpFileContentLayer = tmpFileContentLayer.replaceAll("tank.doNothing\\(\\)", "tank.doNothing(lineno())");
@@ -152,6 +201,10 @@ public class Script {
 	}
 	
 	public void updateInstructions(String newInstructions)
+	/**
+     * Applique la surcouche au script Python
+     * @param newInstructions
+     */	
 	{
 		
 		instructions = newInstructions;
@@ -164,6 +217,10 @@ public class Script {
 	}
 	
 	private void importInstructionsFromFile(String path)
+	/**
+	 * chemin du script pour l'import de l'instruction
+     * @param path
+     */	
 	{
 		if (path == null)
 		{

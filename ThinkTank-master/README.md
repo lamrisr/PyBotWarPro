@@ -1,4 +1,0 @@
-# JavaBotV2
-=======
-ThinkTank
-
