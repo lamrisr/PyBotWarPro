@@ -1,4 +1,6 @@
 package thinktank.javabot.intelligences;
+import java.io.IOException;
+
 import org.python.util.PythonInterpreter;
 
 import thinktank.javabot.graphics.GraphicInterface;
@@ -218,7 +220,19 @@ public class Intelligence extends Thread {
 		initInterpreter();
 		setInitialized();
 		
-		execInterpreter();
+		try
+		{
+			execInterpreter();
+		}
+		catch (Exception e)
+		{
+			try {
+				GraphicInterface.outPut.write("Erreur dans le script\n");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		this.noMoreRunning();
 		
 		interp.close();

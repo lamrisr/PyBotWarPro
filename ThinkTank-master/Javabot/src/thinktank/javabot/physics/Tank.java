@@ -2,6 +2,8 @@ package thinktank.javabot.physics;
 
 import java.util.Random;
 
+import com.ziclix.python.sql.handler.UpdateCountDataHandler;
+
 import thinktank.javabot.graphics.GraphicInterface;
 import thinktank.javabot.intelligences.Action;
 import thinktank.javabot.intelligences.Intelligence;
@@ -149,19 +151,15 @@ public class Tank extends Mobile {
  	*/
 	{
 		if (getMap().estLibre(getCoordX() + getDirection().getDx(),
-				getCoordY() + getDirection().getDy())
-				&& arme.getTempsRestant() <= 0) {
+				getCoordY() + getDirection().getDy())) {
 			Direction d = new Direction(getDirection().getDx(), getDirection().getDy());
 			Projectile p = arme.creerProjectile(getCoordX()
 					+ getDirection().getDx(), getCoordY()
 					+ getDirection().getDy(), d, getMap());
 
-		/*	getMap().addProjectile(p);*/
 			getMap().setProjectile(p);
 
-			arme.initTempsRestant();
-		} else
-			arme.reduireTempsRestant();
+		} 
 	}
 
 	public int getPointsDeVie() 
@@ -197,10 +195,19 @@ public class Tank extends Mobile {
 		
 		getMap().erase(getCoordX(), getCoordY());
 		meurt();
+		
 		if (GraphicInterface.getSelectedTank() == this)
 			GraphicInterface.setSelectedTank(null);
 		getMap().removeTank(this);
 		
+		if (GraphicInterface.getSelectedTank() == null)
+		{
+			System.out.println("UPDATE");
+			GraphicInterface.updateListTanksOnMap();
+			
+
+			
+		}
 	}
 
 	protected void action(Action act) 
@@ -209,6 +216,7 @@ public class Tank extends Mobile {
 	* @param act  action donnée par l'IA
  	*/
 	{
+		System.out.println("Action "+act);
 		if (getLatence() > 0) {
 			setLatence(getLatence() - 1);
 			return;

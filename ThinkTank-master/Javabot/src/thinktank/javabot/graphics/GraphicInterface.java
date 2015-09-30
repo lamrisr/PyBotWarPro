@@ -153,32 +153,36 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
     
     public static void updateListTanksOnMap()
     {
-    	String initText = "Liste des tanks :\n";
+    	String initText = "Liste des tanks :\n\n";
     	textAreaCode.setText(initText);
+
+    	
     	int i = 1;
     	int position = initText.length() + 1;
+    	System.out.println("nb tanks "+MainWindow.getPanneauDessin().getPhysique().getTanks().size());
     	for (Tank t: MainWindow.getPanneauDessin().getPhysique().getTanks())
     	{
+    		System.out.println("pi");
     		textAreaCode.insertIcon(new ImageIcon("src/ressources/TankD"+t.tc+".png"));
-        try {
-        	String textTank = " Tank"+i+"\n";
+    		try {
+    			String textTank = " Tank"+i+"\n";
 
-        	
+
     			textAreaCode.getStyledDocument().insertString(position, textTank, null);
     			System.out.println(position);
 
     			position += (textTank.length() + 1);
 
-        		
 
-		} catch (BadLocationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
+    		} catch (BadLocationException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
     
         i++;
     	}
-    	
+    	System.out.println(textAreaCode.getText());
     	textAreaCode.setEditable(false);
     }
     
@@ -641,16 +645,18 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         this.requestFocusInWindow();
       
     }// </editor-fold>//GEN-END:initComponents
-
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*
+    public void lancement(){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+    	/*
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -669,7 +675,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form *//*
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                gui =  new GraphicInterface();
@@ -679,6 +685,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
             }
         });
     }
+    */
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel5;

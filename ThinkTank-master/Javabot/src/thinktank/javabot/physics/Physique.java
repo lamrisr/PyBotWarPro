@@ -179,6 +179,7 @@ public class Physique {
 
 		Tank t;
 		int mobId;
+		System.out.println(map.getProjectile());
 		if (map.getProjectile() != null)
 		{
 			if (iterFluidite(map.getProjectile()))
@@ -229,10 +230,9 @@ public class Physique {
 					t.lancerIA();
 					
 					t.reduireTempsRestant();
-					System.out.println("Ligne courante: "+t.getIntel().getScript().getCurrentLine());
 					
 					try {
-						Thread.sleep(5);
+						Thread.sleep(25);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

@@ -41,7 +41,6 @@ public class MainWindow extends JFrame{
 	 **/
 
 	public MainWindow() {
-		
 		int lx = 30;
 		int ly = 22;
 		phy = new Physique(lx, ly);
@@ -74,6 +73,7 @@ public class MainWindow extends JFrame{
 			e.printStackTrace();
 		}
 		GraphicInterface NewGame = new GraphicInterface();
+		//NewGame.lancement();
 		
 		
 		NewGame.jPanel5.add(container);
@@ -95,7 +95,8 @@ public class MainWindow extends JFrame{
 	 **/
 	public static void main(String args[]) {
 		
-		
+		System.out.println("TEST");
+
 		// MAP HARD CODE
 		for(int i = 5; i < 10; i++)
 		{
@@ -123,7 +124,7 @@ public class MainWindow extends JFrame{
 	
 		}
 		
-		
+		System.out.println("TEST2");
 		
 		while(true){
 			
