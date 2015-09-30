@@ -311,7 +311,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 				setSelectedTank(null);
 				if (stoped == 0)
 					return;
-				TankChoice=e.getSource().toString().split("Tank")[2].split(".png")[0].toString().substring(1);
+				TankChoice=e.getSource().toString().split("Tank")[1].split(".png")[0].substring(1);
 				int x_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getX();
 				int y_origin_windowGame = (int) MainWindow.getContainer().getLocationOnScreen().getY();
 				int x_end_windowGame = x_origin_windowGame + MainWindow.getContainer().getWidth();
@@ -345,25 +345,25 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         
         
         // Définition des icones de tank dans le menu de selection
-        TankBBrun.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBBrun.png")));
+        TankBBrun.setIcon(new ImageIcon("src/ressources/TankBBrun.png"));
         
         JLabel TankBCyan = new JLabel("");
-        TankBCyan.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBCyan.png")));
+        TankBCyan.setIcon(new ImageIcon("src/ressources/TankBCyan.png"));
         
         JLabel TankBJaune = new JLabel("");
-        TankBJaune.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBJaune.png")));
+        TankBJaune.setIcon(new ImageIcon("src/ressources/TankBJaune.png"));
         
         JLabel TankBRed = new JLabel("");
-        TankBRed.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBRed.png")));
+        TankBRed.setIcon(new ImageIcon("src/ressources/TankBRed.png"));
         
         JLabel TankBRose = new JLabel("");
-        TankBRose.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBRose.png")));
+        TankBRose.setIcon(new ImageIcon("src/ressources/TankBRose.png"));
         
         JLabel TankBVert = new JLabel("");
-        TankBVert.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBVert.png")));
+        TankBVert.setIcon(new ImageIcon("src/ressources/TankBVert.png"));
         
         JLabel TankBViolet = new JLabel("");
-        TankBViolet.setIcon(new ImageIcon(GraphicInterface.class.getResource("/ressources/TankBViolet.png")));
+        TankBViolet.setIcon(new ImageIcon("src/ressources/TankBViolet.png"));
         
         // Association de la gestion du drag & drop
        
@@ -464,6 +464,14 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
         jPanel6.setLayout(gl_jPanel6);
 
 
+        textAreaHelp = new JTextArea(
+        		"noAction()\n" + 
+        		"moveForward()\n" + 
+        		"moveBackward()\n" +
+        		"turnClockwise()\n" +
+        		"turnCounterClockwise()\n" +
+        		"shoot()");
+        textAreaHelp.setEditable(false);
         
         final JButton btnDevMode = new JButton("Mode Dev");
         btnDevMode.addActionListener(new ActionListener() {
@@ -472,11 +480,24 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
 	        		jSplitPane1.setDividerLocation(1.0d);
 	        		GraphicInterface.devModeActivated = true;
 	        		btnDevMode.setText("Mode Jeu");
+	        		textAreaHelp.setText("noAction(): Le Tank est en stand-by.\n" + 
+	                		"moveForward(): Le Tank avance d'une case.\n" + 
+	                		"moveBackward(): Le Tank recule d'une case.\n" +
+	                		"turnClockwise(): Le Tank tourne d'un quart de tour dans le sens de l'horloge.\n" +
+	                		"turnCounterClockwise(): Le Tank tourne d'un quart de tour dans le sens inverse de l'horloge.\n" +
+	                		"shoot(): Le Tank tire un missile.");
 				}
 				else {
 	        		jSplitPane1.setDividerLocation(351);
 	        		GraphicInterface.devModeActivated = false;
 	        		btnDevMode.setText("Mode Dev");
+	        		textAreaHelp.setText(
+	                		"noAction()\n" + 
+	                		"moveForward()\n" + 
+	                		"moveBackward()\n" +
+	                		"turnClockwise()\n" +
+	                		"turnCounterClockwise()\n" +
+	                		"shoot()");
 				}
         	}
         });
@@ -567,14 +588,7 @@ public class GraphicInterface extends javax.swing.JFrame implements WindowListen
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);      
         
         JLabel lblHelp = new JLabel("Aide");
-        textAreaHelp = new JTextArea(
-        		"noAction()\n" + 
-        		"moveForward()\n" + 
-        		"moveBackward()\n" +
-        		"turnClockwise()\n" +
-        		"turnCounterClockwise()\n" +
-        		"shoot()");
-        textAreaHelp.setEditable(false);  
+  
         
         GroupLayout gl_jPanel1 = new GroupLayout(jPanel1);
         gl_jPanel1.setHorizontalGroup(
