@@ -124,7 +124,7 @@ public class GraphicInterface extends javax.swing.JFrame implements
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		System.out.println("");
-		this.setTitle("ThinkTank");
+		this.setTitle("PyBotWar Pro");
 		setResizable(true);
 
 	}

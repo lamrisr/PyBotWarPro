@@ -232,7 +232,7 @@ public class GraphicCreateTank extends JFrame {
 				// On s'en sert pour déterminer la couleur de fond à appliquer
 
 				if (index == 0)
-					setBackground(new Color(86, 85, 211));
+					setBackground(Color.MAGENTA);
 				else if (index == 1)
 					setBackground(Color.RED);
 				else if (index == 2)
@@ -242,9 +242,7 @@ public class GraphicCreateTank extends JFrame {
 				else if (index == 4)
 					setBackground(Color.YELLOW);
 				else if (index == 5)
-					setBackground(Color.BLUE);
-				else if (index == 6)
-					setBackground(Color.YELLOW);
+					setBackground(Color.CYAN);
 
 				return this;
 			}
@@ -271,7 +269,7 @@ public class GraphicCreateTank extends JFrame {
 	public GraphicCreateTank(GraphicInterface interfaceModif,
 			final JLabel scriptnom, final int j) {
 		// TODO Auto-generated constructor stub
-		super("Modifir votre Tank");
+		super("Modifier votre Tank");
 		this.window = interfaceModif;
 
 		lblpy = new JLabel(".py");
@@ -289,7 +287,7 @@ public class GraphicCreateTank extends JFrame {
 		btnNewButton.setIconTextGap(0);
 		btnNewButton.setBorder(null);
 		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setIcon(new ImageIcon("src/ressources/Edit Image-50.png"));
+		btnNewButton.setIcon(new ImageIcon("src/ressources/Edit-Image-50.png"));
 		btnNewButton.setToolTipText("Modifier Le Tank ");
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
@@ -438,7 +436,7 @@ public class GraphicCreateTank extends JFrame {
 				// On s'en sert pour déterminer la couleur de fond à appliquer
 
 				if (index == 0)
-					setBackground(new Color(86, 85, 211));
+					setBackground(Color.MAGENTA);
 				else if (index == 1)
 					setBackground(Color.RED);
 				else if (index == 2)
@@ -448,10 +446,8 @@ public class GraphicCreateTank extends JFrame {
 				else if (index == 4)
 					setBackground(Color.YELLOW);
 				else if (index == 5)
-					setBackground(Color.BLUE);
-				else if (index == 6)
-					setBackground(Color.YELLOW);
-
+					setBackground(Color.CYAN);
+				
 				return this;
 			}
 
